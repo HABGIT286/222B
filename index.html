@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="2B Gaming - PC & PS2 Gaming Master">
     <title>2B - Gaming World</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Audiowide&family=Press+Start+2P&family=Black+Ops+One&family=Righteous&family=Bungee&family=Russo+One&family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -12,6 +12,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* منع تحديد النص */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* منع ظهور المستطيل الأزرق عند النقر الطويل */
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
         :root {
@@ -25,6 +33,9 @@
 
         html {
             scroll-behavior: smooth;
+            /* منع التقريب والتبعيد */
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -41,6 +52,9 @@
             min-height: 100vh;
             position: relative;
             line-height: 1.6;
+            /* منع التقريب على الموبايل */
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
         }
 
         /* Marquee */
@@ -204,12 +218,12 @@
             border: 1px solid rgba(0, 212, 255, 0.3);
             border-radius: 50px;
             color: #fff;
-            font-family: 'Audiowide', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.4s ease;
             letter-spacing: 1.5px;
-            text-transform: uppercase;
             position: relative;
             overflow: hidden;
             white-space: nowrap;
@@ -275,11 +289,11 @@
             transition: transform 0.3s ease;
         }
 
-        /* Section Titles */
+        /* Section Titles - كلها بخط Cairo */
         .home-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
+            font-family: 'Cairo', sans-serif;
             font-weight: 900;
+            font-size: 2rem;
             margin-bottom: 25px;
             text-align: center;
             background: linear-gradient(135deg, var(--gold), var(--primary));
@@ -287,12 +301,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .about-title {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 1.5rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
             margin-bottom: 25px;
             text-align: center;
             background: linear-gradient(135deg, var(--accent), var(--gold));
@@ -300,11 +314,11 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 2px;
-            line-height: 1.8;
         }
 
         .schedule-title {
-            font-family: 'Black Ops One', cursive;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
             font-size: 2rem;
             margin-bottom: 25px;
             text-align: center;
@@ -313,11 +327,11 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .social-title {
-            font-family: 'Russo One', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
             font-size: 2rem;
             margin-bottom: 25px;
             text-align: center;
@@ -326,7 +340,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 3px;
-            text-transform: uppercase;
         }
 
         /* Album Section */
@@ -376,7 +389,7 @@
             font-weight: 700;
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
             color: var(--gold);
-            font-family: 'Audiowide', sans-serif;
+            font-family: 'Cairo', sans-serif;
             letter-spacing: 2px;
             width: 90%;
         }
@@ -412,6 +425,7 @@
             line-height: 2;
             margin-top: 20px;
             color: rgba(255,255,255,0.95);
+            font-family: 'Cairo', sans-serif;
         }
 
         /* About Section */
@@ -426,10 +440,12 @@
             font-size: 1.1rem;
             line-height: 2;
             color: rgba(255, 255, 255, 0.95);
+            font-family: 'Cairo', sans-serif;
         }
 
         .about-text h3 {
-            font-family: 'Audiowide', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
             color: var(--primary);
             margin: 20px 0 10px;
             font-size: 1.3rem;
@@ -449,6 +465,7 @@
             border-radius: 25px;
             font-weight: 600;
             font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
             box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -504,6 +521,7 @@
             font-size: 1.1rem;
             margin-bottom: 20px;
             color: rgba(255,255,255,0.9);
+            font-family: 'Cairo', sans-serif;
         }
 
         .schedule-grid {
@@ -559,9 +577,9 @@
         }
 
         .day-name {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
             font-size: 1.4rem;
-            font-weight: 400;
             margin-bottom: 8px;
             color: var(--gold);
             letter-spacing: 2px;
@@ -571,7 +589,7 @@
             font-size: 1rem;
             color: var(--primary);
             font-weight: 600;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         .day-icon {
@@ -629,6 +647,7 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             margin-top: 40px;
+            font-family: 'Cairo', sans-serif;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
@@ -642,7 +661,7 @@
             .header-subtitle { font-size: 1.3rem; }
             .nav-tab { padding: 15px 35px; font-size: 1.1rem; }
             .home-title { font-size: 2.8rem; }
-            .about-title { font-size: 2rem; }
+            .about-title { font-size: 2.2rem; }
             .schedule-title { font-size: 2.8rem; }
             .social-title { font-size: 2.8rem; }
             .album-container { height: 600px; }
@@ -667,7 +686,7 @@
             .header-subtitle { font-size: 1.2rem; }
             .nav-tab { padding: 14px 30px; font-size: 1rem; }
             .home-title { font-size: 2.5rem; }
-            .about-title { font-size: 1.8rem; }
+            .about-title { font-size: 2rem; }
             .schedule-title { font-size: 2.5rem; }
             .social-title { font-size: 2.5rem; }
             .album-container { height: 500px; }
@@ -687,7 +706,7 @@
             .header-subtitle { font-size: 1.1rem; }
             .nav-tab { padding: 12px 25px; font-size: 0.95rem; }
             .home-title { font-size: 2.2rem; }
-            .about-title { font-size: 1.6rem; }
+            .about-title { font-size: 1.8rem; }
             .schedule-title { font-size: 2.2rem; }
             .social-title { font-size: 2.2rem; }
             .album-container { height: 450px; }
@@ -708,7 +727,7 @@
             .nav-tabs { gap: 10px; }
             .nav-tab { padding: 11px 22px; font-size: 0.9rem; }
             .home-title { font-size: 2rem; }
-            .about-title { font-size: 1.4rem; }
+            .about-title { font-size: 1.6rem; }
             .schedule-title { font-size: 2rem; }
             .social-title { font-size: 2rem; }
             .album-container { height: 400px; }
@@ -740,7 +759,7 @@
             .nav-tab { padding: 10px 18px; font-size: 0.85rem; letter-spacing: 1px; }
             .section { margin: 20px auto; padding: 0 12px; }
             .home-title { font-size: 1.8rem; margin-bottom: 20px; }
-            .about-title { font-size: 1.2rem; margin-bottom: 20px; }
+            .about-title { font-size: 1.4rem; margin-bottom: 20px; }
             .schedule-title { font-size: 1.8rem; margin-bottom: 20px; }
             .social-title { font-size: 1.8rem; margin-bottom: 20px; }
             .album-container { height: 320px; margin: 20px 0; }
@@ -779,7 +798,7 @@
             .nav-tab { padding: 9px 15px; font-size: 0.75rem; letter-spacing: 0.8px; border-radius: 40px; }
             .section { margin: 15px auto; padding: 0 10px; }
             .home-title { font-size: 1.6rem; margin-bottom: 18px; letter-spacing: 1.5px; }
-            .about-title { font-size: 1rem; margin-bottom: 18px; letter-spacing: 1.5px; }
+            .about-title { font-size: 1.3rem; margin-bottom: 18px; letter-spacing: 1.5px; }
             .schedule-title { font-size: 1.6rem; margin-bottom: 18px; letter-spacing: 1.5px; }
             .social-title { font-size: 1.6rem; margin-bottom: 18px; letter-spacing: 2px; }
             .album-container { height: 280px; margin: 18px 0; border-radius: 15px; }
@@ -815,7 +834,7 @@
             .header-subtitle { font-size: 0.8rem; }
             .nav-tab { padding: 8px 12px; font-size: 0.7rem; }
             .home-title, .schedule-title, .social-title { font-size: 1.4rem; }
-            .about-title { font-size: 0.9rem; }
+            .about-title { font-size: 1.1rem; }
             .album-container { height: 250px; }
             .album-text { font-size: 1rem; }
             .album-description { font-size: 0.9rem; }
@@ -855,7 +874,8 @@
         }
 
         .loader-text {
-            font-family: 'Bungee', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
             font-size: 2.5rem;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
@@ -929,7 +949,7 @@
     <!-- Home Section -->
     <section class="section active" id="home">
         <div class="glass-card">
-            <h2 class="home-title">🎮 معرض الألعاب</h2>
+            <h2 class="home-title"> معرض الألعاب</h2>
             <div class="album-container" id="albumContainer">
                 <div class="album-slide active" style="background-image: url('S1.jpg')"></div>
                 <div class="album-slide" style="background-image: url('S2.jpg')"></div>
@@ -941,7 +961,7 @@
                 <div class="album-slide" style="background-image: url('S8.jpg')"></div>
                 <div class="album-slide" style="background-image: url('S9.jpg')"></div>
                 
-                <div class="album-text" id="albumText">أهلاً بك في عالم 2B للألعاب</div>
+                <div class="album-text" id="albumText">أفضل الألعاب والمغامرات</div>
                 
                 <div class="album-dots" id="albumDots"></div>
             </div>
@@ -1064,8 +1084,7 @@
     </section>
 
     <footer class="footer">
-        <p>© 2026 2B Gaming. جميع الحقوق محفوظة</p>
-        <p style="margin-top: 8px; font-family: 'Audiowide', sans-serif; letter-spacing: 1.5px;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
+        <p style="font-family: 'Audiowide', sans-serif; letter-spacing: 1.5px;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
     </footer>
 
     <script>
@@ -1189,6 +1208,21 @@
                 });
             });
         }
+
+        // منع التكبير بالضغط المزدوج على الموبايل
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (event) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // منع التكبير بـ pinch zoom
+        document.addEventListener('gesturestart', (e) => {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
