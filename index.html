@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2B - Gaming World</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Audiowide&family=Press+Start+2P&family=Black+Ops+One&family=Righteous&family=Bungee&family=Russo+One&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -19,14 +19,14 @@
             --accent: #ff006e;
             --gold: #ffd700;
             --dark: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.05);
+            --glass: rgba(10, 10, 10, 0.55);
         }
 
         body {
             font-family: 'Cairo', sans-serif;
-            /* تم إضافة S.jpg كخلفية مع طبقة داكنة لضمان وضوح النصوص */
+            /* خلفية نظيفة بدون ألوان إضافية - فقط طبقة داكنة بسيطة جداً لإبراز النصوص */
             background: 
-                linear-gradient(135deg, rgba(10, 10, 10, 0.85) 0%, rgba(26, 26, 46, 0.85) 50%, rgba(22, 33, 62, 0.85) 100%),
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
                 url('S.jpg');
             background-size: cover;
             background-position: center;
@@ -38,38 +38,27 @@
             position: relative;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(123, 44, 191, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
         /* Marquee */
         .marquee-container {
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
             padding: 15px 0;
             overflow: hidden;
             border-top: 1px solid rgba(0, 212, 255, 0.3);
             border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .marquee-content {
             display: inline-block;
             white-space: nowrap;
-            animation: marquee 20s linear infinite, gradient 5s ease infinite;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
+            animation: marquee 25s linear infinite, gradient 5s ease infinite;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
             background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e, #ffd700, #00d4ff);
             background-size: 300% 100%;
             -webkit-background-clip: text;
@@ -89,7 +78,7 @@
 
         /* Header */
         .header {
-            padding: 30px 20px;
+            padding: 40px 20px 20px;
             text-align: center;
             position: relative;
         }
@@ -101,27 +90,27 @@
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             border: 4px solid transparent;
             background: linear-gradient(var(--dark), var(--dark)) padding-box,
                         linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)) border-box;
             object-fit: cover;
-            box-shadow: 0 0 50px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
             animation: profileGlow 3s ease-in-out infinite;
         }
 
         @keyframes profileGlow {
-            0%, 100% { box-shadow: 0 0 50px rgba(0, 212, 255, 0.5); }
-            50% { box-shadow: 0 0 80px rgba(123, 44, 191, 0.8); }
+            0%, 100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(123, 44, 191, 0.6); }
         }
 
         .live-indicator {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             padding: 8px 20px;
             border-radius: 20px;
             display: none;
@@ -168,79 +157,166 @@
         }
 
         .username {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
+            font-family: 'Bungee', sans-serif;
+            font-size: 4rem;
+            font-weight: 400;
             background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin: 10px 0;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 8px;
         }
 
-        /* Glass Card */
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            position: sticky;
+            top: 60px;
+            z-index: 99;
+        }
+
+        .nav-tab {
+            padding: 14px 30px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.6);
+            transform: translateY(-3px);
+        }
+
+        /* Sections - كل قسم منفصل */
+        .section {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glass Card - نظيف وشفاف */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 20px auto;
-            max-width: 1200px;
+            border-radius: 25px;
+            padding: 40px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
             transition: transform 0.3s ease;
         }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            pointer-events: none;
-        }
-
-        .glass-card:hover::before {
-            animation: shine 0.8s ease-in-out;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .section-title {
+        /* ====== خطوط مختلفة لكل قسم ====== */
+        
+        /* قسم الرئيسية - خط Orbitron */
+        .home-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
+            font-weight: 900;
             margin-bottom: 30px;
             text-align: center;
             background: linear-gradient(135deg, var(--gold), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            position: relative;
-            display: inline-block;
-            width: 100%;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        /* قسم نبذة عني - خط Press Start 2P */
+        .about-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            line-height: 1.6;
+        }
+
+        /* قسم أوقات اللعب - خط Black Ops One */
+        .schedule-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* قسم السوشيال ميديا - خط Russo One */
+        .social-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
         /* Album Section */
@@ -276,12 +352,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.9));
+            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.85));
         }
 
         .album-text {
             position: absolute;
-            bottom: 40px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -290,6 +366,8 @@
             font-weight: 700;
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
             color: var(--gold);
+            font-family: 'Audiowide', sans-serif;
+            letter-spacing: 2px;
         }
 
         .album-dots {
@@ -321,21 +399,22 @@
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 40px;
             align-items: center;
         }
 
         .about-text {
             font-size: 1.2rem;
             line-height: 2;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .about-text h3 {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Audiowide', sans-serif;
             color: var(--primary);
-            margin: 20px 0 10px;
-            font-size: 1.5rem;
+            margin: 25px 0 10px;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
         }
 
         .games-list {
@@ -364,15 +443,15 @@
         .about-3d-icons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 25px;
             justify-items: center;
         }
 
         .icon-3d {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 20px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -408,7 +487,8 @@
         }
 
         .schedule-card {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 212, 255, 0.3);
             border-radius: 15px;
             padding: 25px;
@@ -425,7 +505,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             transition: left 0.5s;
         }
 
@@ -440,7 +520,7 @@
         }
 
         .schedule-card.active {
-            background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 212, 255, 0.2));
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.15), rgba(0, 212, 255, 0.15));
             border-color: #00ff00;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
             animation: activeGlow 2s ease-in-out infinite;
@@ -452,17 +532,19 @@
         }
 
         .day-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 400;
             margin-bottom: 10px;
             color: var(--gold);
+            letter-spacing: 2px;
         }
 
         .day-time {
             font-size: 1.1rem;
             color: var(--primary);
             font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .day-icon {
@@ -473,44 +555,31 @@
 
         /* Social Links */
         .social-section {
-            margin: 40px 0;
             text-align: center;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .social-btn {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #fff;
             text-decoration: none;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
             border: 2px solid transparent;
-        }
-
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            opacity: 0.8;
-            z-index: -1;
         }
 
         .social-btn.discord { background: linear-gradient(135deg, #5865F2, #4752C4); }
@@ -524,19 +593,29 @@
             border-color: #fff;
         }
 
-        .social-btn i {
-            position: relative;
-            z-index: 1;
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            margin-top: 40px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .username { font-size: 2.5rem; }
+            .username { font-size: 2.5rem; letter-spacing: 4px; }
             .clock { font-size: 1.8rem; }
             .about-content { grid-template-columns: 1fr; }
             .album-container { height: 300px; }
             .schedule-grid { grid-template-columns: repeat(2, 1fr); }
             .album-text { font-size: 1.3rem; }
+            .nav-tab { padding: 10px 20px; font-size: 0.85rem; }
+            .home-title, .schedule-title, .social-title { font-size: 1.8rem; }
+            .about-title { font-size: 1.2rem; }
+            .glass-card { padding: 25px; }
         }
 
         /* Loading Animation */
@@ -564,9 +643,8 @@
         }
 
         .loader-text {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Bungee', sans-serif;
             font-size: 3rem;
-            font-weight: 900;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -577,34 +655,6 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(0.95); }
         }
-
-        /* Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 10s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -614,9 +664,6 @@
             <div class="loader-text">2B GAMING</div>
         </div>
     </div>
-
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
 
     <!-- Marquee -->
     <div class="marquee-container">
@@ -637,141 +684,157 @@
         
         <div class="clock" id="clock">00:00:00</div>
         <h1 class="username">2B</h1>
-        <p style="font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-top: 10px; letter-spacing: 2px;">PC & PS2 Gaming Master</p>
+        <p style="font-size: 1.2rem; color: rgba(255,255,255,0.85); margin-top: 10px; letter-spacing: 2px; font-family: 'Audiowide', sans-serif;">PC & PS2 Gaming Master</p>
     </header>
 
-    <!-- Main Section - Album -->
-    <section class="glass-card">
-        <h2 class="section-title">🎮 معرض الألعاب</h2>
-        <div class="album-container" id="albumContainer">
-            <div class="album-slide active" style="background-image: url('S1.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/1a1a2e/00d4ff?text=Game+1)'"></div>
-            <div class="album-slide" style="background-image: url('S2.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/16213e/7b2cbf?text=Game+2)'"></div>
-            <div class="album-slide" style="background-image: url('S3.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/0f3460/ff006e?text=Game+3)'"></div>
-            <div class="album-slide" style="background-image: url('S4.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/533483/ffd700?text=Game+4)'"></div>
-            <div class="album-slide" style="background-image: url('S5.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/1a1a2e/00d4ff?text=Game+5)'"></div>
-            <div class="album-slide" style="background-image: url('S6.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/16213e/7b2cbf?text=Game+6)'"></div>
-            <div class="album-slide" style="background-image: url('S7.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/0f3460/ff006e?text=Game+7)'"></div>
-            <div class="album-slide" style="background-image: url('S8.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/533483/ffd700?text=Game+8)'"></div>
-            <div class="album-slide" style="background-image: url('S9.jpg')" onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x500/1a1a2e/00d4ff?text=Game+9)'"></div>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-section="home">🏠 الرئيسية</button>
+        <button class="nav-tab" data-section="about">👤 نبذة عني</button>
+        <button class="nav-tab" data-section="schedule">⏰ أوقات اللعب</button>
+        <button class="nav-tab" data-section="social">🔗 تابعني</button>
+    </nav>
+
+    <!-- Home Section -->
+    <section class="section active" id="home">
+        <div class="glass-card">
+            <h2 class="home-title">🎮 معرض الألعاب</h2>
+            <div class="album-container" id="albumContainer">
+                <div class="album-slide active" style="background-image: url('S1.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S2.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S3.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S4.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S5.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S6.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S7.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S8.jpg')"></div>
+                <div class="album-slide" style="background-image: url('S9.jpg')"></div>
+                
+                <div class="album-text" id="albumText">أهلاً بك في عالم 2B للألعاب</div>
+                
+                <div class="album-dots" id="albumDots"></div>
+            </div>
             
-            <div class="album-text" id="albumText">أهلاً بك في عالم 2B للألعاب</div>
-            
-            <div class="album-dots" id="albumDots"></div>
+            <p style="text-align: center; font-size: 1.3rem; line-height: 2; margin-top: 20px; color: rgba(255,255,255,0.95); font-family: 'Cairo', sans-serif;">
+                مرحباً بك في موقعي الشخصي! أنا <strong style="color: var(--primary);">2B</strong>، لاعب محترف في ألعاب PC و PS2.<br>
+                أشارك معكم أفضل اللحظات والألعاب المثيرة. تابعوني على منصات التواصل الاجتماعي!
+            </p>
         </div>
-        
-        <p style="text-align: center; font-size: 1.3rem; line-height: 2; margin-top: 20px; color: rgba(255,255,255,0.9);">
-            مرحباً بك في موقعي الشخصي! أنا <strong style="color: var(--primary);">2B</strong>، لاعب محترف في ألعاب PC و PS2.<br>
-            أشارك معكم أفضل اللحظات والألعاب المثيرة. تابعوني على منصات التواصل الاجتماعي أدناه!
-        </p>
     </section>
 
     <!-- About Section -->
-    <section class="glass-card">
-        <h2 class="section-title">👤 نبذة عني</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <h3>الاسم:</h3>
-                <p style="font-size: 1.4rem; color: var(--gold); margin-bottom: 20px; font-weight: 700;">2B</p>
-                
-                <h3>الألعاب المفضلة:</h3>
-                <div class="games-list">
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> God of War</span>
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> The Last of Us</span>
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> GTA V</span>
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> FIFA</span>
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> Call of Duty</span>
-                    <span class="game-tag"><i class="fas fa-gamepad"></i> Spider-Man</span>
+    <section class="section" id="about">
+        <div class="glass-card">
+            <h2 class="about-title">نبذة عني</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>الاسم:</h3>
+                    <p style="font-size: 1.4rem; color: var(--gold); margin-bottom: 20px; font-weight: 700;">2B</p>
+                    
+                    <h3>الألعاب المفضلة:</h3>
+                    <div class="games-list">
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> God of War</span>
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> The Last of Us</span>
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> GTA V</span>
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> FIFA</span>
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> Call of Duty</span>
+                        <span class="game-tag"><i class="fas fa-gamepad"></i> Spider-Man</span>
+                    </div>
+                    
+                    <h3>نبذة تعريفية:</h3>
+                    <p>أنا لاعب شغوف بألعاب الفيديو، أمتلك خبرة واسعة في ألعاب PC و PS2. أبدأ البث يومياً الساعة 8 مساءً. هدفي تقديم محتوى ترفيهي رائع ومشاركة أفضل اللحظات Gaming مع المتابعين.</p>
                 </div>
                 
-                <h3>نبذة تعريفية:</h3>
-                <p>أنا لاعب شغوف بألعاب الفيديو، أمتلك خبرة واسعة في ألعاب PC و PS2. أبدأ البث يومياً الساعة 8 مساءً. هدفي تقديم محتوى ترفيهي رائع ومشاركة أفضل اللحظات Gaming مع المتابعين.</p>
-            </div>
-            
-            <div class="about-3d-icons">
-                <div class="icon-3d">
-                    <i class="fas fa-desktop"></i>
-                </div>
-                <div class="icon-3d">
-                    <i class="fas fa-tv"></i>
-                </div>
-                <div class="icon-3d">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <div class="icon-3d">
-                    <i class="fas fa-trophy"></i>
+                <div class="about-3d-icons">
+                    <div class="icon-3d">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="icon-3d">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="icon-3d">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="icon-3d">
+                        <i class="fas fa-trophy"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Schedule Section -->
-    <section class="glass-card">
-        <h2 class="section-title">⏰ أوقات اللعب</h2>
-        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 20px; color: rgba(255,255,255,0.8);">
-            مواعيد البث المباشر يومياً - الساعة <strong style="color: var(--primary);">8:00 مساءً</strong>
-        </p>
-        
-        <div class="schedule-grid" id="scheduleGrid">
-            <div class="schedule-card" data-day="0">
-                <div class="day-icon"><i class="fas fa-sun"></i></div>
-                <div class="day-name">الأحد</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="1">
-                <div class="day-icon"><i class="fas fa-moon"></i></div>
-                <div class="day-name">الإثنين</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="2">
-                <div class="day-icon"><i class="fas fa-star"></i></div>
-                <div class="day-name">الثلاثاء</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="3">
-                <div class="day-icon"><i class="fas fa-fire"></i></div>
-                <div class="day-name">الأربعاء</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="4">
-                <div class="day-icon"><i class="fas fa-bolt"></i></div>
-                <div class="day-name">الخميس</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="5">
-                <div class="day-icon"><i class="fas fa-gamepad"></i></div>
-                <div class="day-name">الجمعة</div>
-                <div class="day-time">8:00 PM</div>
-            </div>
-            <div class="schedule-card" data-day="6">
-                <div class="day-icon"><i class="fas fa-crown"></i></div>
-                <div class="day-name">السبت</div>
-                <div class="day-time">8:00 PM</div>
+    <section class="section" id="schedule">
+        <div class="glass-card">
+            <h2 class="schedule-title">أوقات اللعب</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 20px; color: rgba(255,255,255,0.9);">
+                مواعيد البث المباشر يومياً - الساعة <strong style="color: var(--primary);">8:00 مساءً</strong>
+            </p>
+            
+            <div class="schedule-grid" id="scheduleGrid">
+                <div class="schedule-card" data-day="0">
+                    <div class="day-icon"><i class="fas fa-sun"></i></div>
+                    <div class="day-name">الأحد</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="1">
+                    <div class="day-icon"><i class="fas fa-moon"></i></div>
+                    <div class="day-name">الإثنين</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="2">
+                    <div class="day-icon"><i class="fas fa-star"></i></div>
+                    <div class="day-name">الثلاثاء</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="3">
+                    <div class="day-icon"><i class="fas fa-fire"></i></div>
+                    <div class="day-name">الأربعاء</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="4">
+                    <div class="day-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="day-name">الخميس</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="5">
+                    <div class="day-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="day-name">الجمعة</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
+                <div class="schedule-card" data-day="6">
+                    <div class="day-icon"><i class="fas fa-crown"></i></div>
+                    <div class="day-name">السبت</div>
+                    <div class="day-time">8:00 PM</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Social Section -->
-    <section class="glass-card social-section">
-        <h2 class="section-title">🔗 تابعني على</h2>
-        <div class="social-links">
-            <a href="https://discord.gg/2b1" target="_blank" class="social-btn discord" title="Discord">
-                <i class="fab fa-discord"></i>
-            </a>
-            <a href="https://www.tiktok.com/@qs.g0" target="_blank" class="social-btn tiktok" title="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.instagram.com/2b__a2?igsh=YXUza3pwbGd1c2lz" target="_blank" class="social-btn instagram" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://youtube.com/@2beve?si=-VEP2fGXVvmZ7Ojp" target="_blank" class="social-btn youtube" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
+    <section class="section" id="social">
+        <div class="glass-card social-section">
+            <h2 class="social-title">تابعني على</h2>
+            <div class="social-links">
+                <a href="https://discord.gg/2b1" target="_blank" class="social-btn discord" title="Discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="https://www.tiktok.com/@qs.g0" target="_blank" class="social-btn tiktok" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com/2b__a2?igsh=YXUza3pwbGd1c2lz" target="_blank" class="social-btn instagram" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://youtube.com/@2beve?si=-VEP2fGXVvmZ7Ojp" target="_blank" class="social-btn youtube" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 30px; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+    <footer class="footer">
         <p>© 2026 2B Gaming. جميع الحقوق محفوظة</p>
-        <p style="margin-top: 10px; font-family: 'Orbitron', sans-serif;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
+        <p style="margin-top: 10px; font-family: 'Audiowide', sans-serif; letter-spacing: 2px;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
     </footer>
 
     <script>
@@ -782,6 +845,24 @@
             }, 1500);
         });
 
+        // Tab Navigation - التنقل بين الأقسام
+        const tabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetSection = tab.dataset.section;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetSection).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
         // Clock
         function updateClock() {
             const now = new Date();
@@ -790,7 +871,6 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
             
-            // Check if it's 8 PM (20:00) or later
             const liveIndicator = document.getElementById('liveIndicator');
             if (now.getHours() >= 20) {
                 liveIndicator.classList.add('active');
@@ -798,7 +878,6 @@
                 liveIndicator.classList.remove('active');
             }
             
-            // Update schedule
             updateSchedule(now.getDay(), now.getHours());
         }
         setInterval(updateClock, 1000);
@@ -820,7 +899,6 @@
         ];
         let currentSlide = 0;
 
-        // Create dots
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
             dot.className = 'dot' + (index === 0 ? ' active' : '');
@@ -858,21 +936,7 @@
             });
         }
 
-        // Create Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // 3D Tilt Effect for Cards
+        // 3D Tilt Effect
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -882,8 +946,8 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = (y - centerY) / 30;
-                const rotateY = (centerX - x) / 30;
+                const rotateX = (y - centerY) / 40;
+                const rotateY = (centerX - x) / 40;
                 
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
