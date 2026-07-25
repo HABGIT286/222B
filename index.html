@@ -29,7 +29,7 @@
             --glass: rgba(10, 10, 10, 0.55);
             --theme-bg: rgba(10, 10, 10, 0.55);
             --theme-border: rgba(255, 255, 255, 0.1);
-            --theme-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --theme-gradient: linear-gradient(135deg, #00d4ff, #7b2cbf);
         }
 
         html {
@@ -54,6 +54,56 @@
             line-height: 1.6;
             touch-action: manipulation;
             -webkit-text-size-adjust: 100%;
+            transition: all 0.5s ease;
+        }
+
+        /* Theme Classes - تطبق على جميع الأقسام */
+        body.theme-1 {
+            --theme-bg: rgba(200, 100, 150, 0.25);
+            --theme-border: rgba(255, 150, 200, 0.3);
+            --theme-gradient: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            --primary: #ff6b6b;
+            --secondary: #ff8e8e;
+        }
+
+        body.theme-2 {
+            --theme-bg: rgba(100, 50, 150, 0.25);
+            --theme-border: rgba(150, 100, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #8e7cc3, #a67fc9);
+            --primary: #8e7cc3;
+            --secondary: #a67fc9;
+        }
+
+        body.theme-3 {
+            --theme-bg: rgba(50, 150, 200, 0.25);
+            --theme-border: rgba(100, 200, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #48dbfb, #1dd1a1);
+            --primary: #48dbfb;
+            --secondary: #1dd1a1;
+        }
+
+        body.theme-4 {
+            --theme-bg: rgba(200, 50, 50, 0.25);
+            --theme-border: rgba(255, 100, 100, 0.3);
+            --theme-gradient: linear-gradient(135deg, #ff9f43, #ff6b6b);
+            --primary: #ff9f43;
+            --secondary: #ff6b6b;
+        }
+
+        body.theme-5 {
+            --theme-bg: rgba(150, 150, 150, 0.25);
+            --theme-border: rgba(255, 255, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #576574, #808e9b);
+            --primary: #576574;
+            --secondary: #808e9b;
+        }
+
+        body.theme-6 {
+            --theme-bg: rgba(50, 100, 150, 0.25);
+            --theme-border: rgba(100, 150, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #48dbfb, #0abde3);
+            --primary: #48dbfb;
+            --secondary: #0abde3;
         }
 
         /* Marquee */
@@ -124,31 +174,33 @@
             50% { box-shadow: 0 0 60px rgba(123, 44, 191, 0.6); }
         }
 
-        .live-indicator {
+        /* Discord Notification Indicator - بديل عن شعار البث */
+        .discord-notification-indicator {
             position: absolute;
             bottom: 10px;
             right: 10px;
             background: rgba(0, 0, 0, 0.85);
-            padding: 6px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 50px;
             display: none;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border: 2px solid #00ff00;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            z-index: 10;
         }
 
-        .live-indicator.active {
+        .discord-notification-indicator.active {
             display: flex;
-            animation: livePulse 2s ease-in-out infinite;
+            animation: discordPulse 2s ease-in-out infinite;
         }
 
-        .live-dot {
-            width: 10px;
-            height: 10px;
+        .notification-dot {
+            width: 12px;
+            height: 12px;
             background: #00ff00;
             border-radius: 50%;
             animation: pulse 1.5s ease-in-out infinite;
@@ -156,12 +208,18 @@
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
+            50% { transform: scale(1.5); opacity: 0.7; }
         }
 
-        @keyframes livePulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.8); }
+        @keyframes discordPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(0, 255, 0, 0.9);
+                transform: scale(1.05);
+            }
         }
 
         .clock {
@@ -212,9 +270,9 @@
 
         .nav-tab {
             padding: 12px 24px;
-            background: rgba(10, 10, 10, 0.7);
+            background: var(--theme-bg);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid var(--theme-border);
             border-radius: 50px;
             color: #fff;
             font-family: 'Cairo', sans-serif;
@@ -250,7 +308,7 @@
         }
 
         .nav-tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--theme-gradient);
             border-color: transparent;
             box-shadow: 0 10px 30px rgba(123, 44, 191, 0.6);
             transform: translateY(-3px);
@@ -274,9 +332,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Glass Card */
+        /* Glass Card - مع الثيم */
         .glass-card {
-            background: var(--glass);
+            background: var(--theme-bg);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--theme-border);
@@ -285,7 +343,27 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.5s ease;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--theme-gradient);
+            z-index: -1;
+            border-radius: 27px;
+            filter: blur(10px);
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .glass-card:hover::before {
+            filter: blur(20px);
+            opacity: 0.6;
         }
 
         /* Section Titles */
@@ -459,7 +537,7 @@
         }
 
         .game-tag {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            background: var(--theme-gradient);
             padding: 10px 18px;
             border-radius: 25px;
             font-weight: 600;
@@ -486,7 +564,7 @@
         .icon-3d {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--theme-gradient);
             border-radius: 25px;
             display: flex;
             align-items: center;
@@ -500,9 +578,9 @@
             animation: float3D 3s ease-in-out infinite;
         }
 
-        .icon-3d:nth-child(2) { animation-delay: 0.5s; background: linear-gradient(135deg, var(--accent), var(--gold)); }
-        .icon-3d:nth-child(3) { animation-delay: 1s; background: linear-gradient(135deg, var(--gold), var(--primary)); }
-        .icon-3d:nth-child(4) { animation-delay: 1.5s; background: linear-gradient(135deg, var(--secondary), var(--accent)); }
+        .icon-3d:nth-child(2) { animation-delay: 0.5s; }
+        .icon-3d:nth-child(3) { animation-delay: 1s; }
+        .icon-3d:nth-child(4) { animation-delay: 1.5s; }
 
         @keyframes float3D {
             0%, 100% { transform: translateY(0) rotateY(0deg); }
@@ -533,7 +611,7 @@
         .schedule-card {
             background: rgba(10, 10, 10, 0.5);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid var(--theme-border);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
@@ -749,7 +827,7 @@
         .spec-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--theme-gradient);
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -777,7 +855,7 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Poll Section */
+        /* Poll Section - تفاعلي */
         .poll-container {
             background: var(--theme-bg);
             backdrop-filter: blur(15px);
@@ -815,10 +893,18 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
+            border: 2px solid transparent;
         }
 
         .poll-option:hover {
             transform: translateX(5px);
+            border-color: var(--primary);
+        }
+
+        .poll-option.voted {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
         }
 
         .poll-option-name {
@@ -827,6 +913,8 @@
             font-weight: 700;
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 2;
         }
 
         .poll-option-progress {
@@ -840,16 +928,28 @@
         .poll-option-bar {
             height: 100%;
             border-radius: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: var(--theme-gradient);
             width: 0%;
             transition: width 1.5s ease-out;
+        }
+
+        .poll-votes-count {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--gold);
+            z-index: 3;
         }
 
         /* Today's Game Section */
         .today-game {
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.7), rgba(0, 0, 0, 0.9));
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid var(--theme-border);
             border-radius: 25px;
             padding: 30px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
@@ -866,7 +966,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            background: var(--theme-gradient);
             z-index: -1;
             border-radius: 27px;
             filter: blur(10px);
@@ -878,7 +978,7 @@
             font-weight: 900;
             font-size: 2.2rem;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            background: var(--theme-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -901,7 +1001,7 @@
             height: auto;
             border-radius: 20px;
             margin: 0 auto;
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid var(--theme-border);
             box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
         }
 
@@ -918,10 +1018,10 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
 
-        /* Stream Notification */
+        /* Stream Notification - Discord */
         .stream-notification {
             position: fixed;
-            top: 20px;
+            top: 80px;
             right: 20px;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
@@ -961,7 +1061,7 @@
         }
 
         .notification-button {
-            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            background: var(--theme-gradient);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -985,9 +1085,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(10, 10, 10, 0.7);
+            background: var(--theme-bg);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid var(--theme-border);
             border-radius: 25px;
             padding: 15px;
             width: 300px;
@@ -1023,9 +1123,10 @@
 
         .music-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: var(--theme-gradient);
             width: 0%;
             border-radius: 2.5px;
+            transition: width 0.3s;
         }
 
         .music-buttons {
@@ -1097,145 +1198,10 @@
 
         /* ===== RESPONSIVE DESIGN ===== */
 
-        /* Large Desktop (1920px+) */
-        @media (min-width: 1920px) {
-            .marquee-content { font-size: 2.5rem; }
-            .profile-img { width: 180px; height: 180px; }
-            .clock { font-size: 3rem; }
-            .username { font-size: 4.5rem; letter-spacing: 10px; }
-            .header-subtitle { font-size: 1.3rem; }
-            .nav-tab { padding: 15px 35px; font-size: 1.1rem; }
-            .home-title { font-size: 2.8rem; }
-            .about-title { font-size: 2.2rem; }
-            .schedule-title { font-size: 2.8rem; }
-            .social-title { font-size: 2.8rem; }
-            .album-container { height: 600px; }
-            .album-text { font-size: 2rem; }
-            .about-text { font-size: 1.3rem; }
-            .about-text h3 { font-size: 1.6rem; }
-            .game-tag { font-size: 1.1rem; padding: 12px 22px; }
-            .icon-3d { width: 130px; height: 130px; font-size: 3.5rem; }
-            .day-name { font-size: 1.7rem; }
-            .day-time { font-size: 1.2rem; }
-            .day-icon { font-size: 3rem; }
-            .social-btn { width: 90px; height: 90px; font-size: 2.5rem; }
-            .glass-card { padding: 45px; }
-        }
-
-        /* Desktop (1200px - 1919px) */
-        @media (min-width: 1200px) and (max-width: 1919px) {
-            .marquee-content { font-size: 2rem; }
-            .profile-img { width: 160px; height: 160px; }
-            .clock { font-size: 2.5rem; }
-            .username { font-size: 3.5rem; letter-spacing: 8px; }
-            .header-subtitle { font-size: 1.2rem; }
-            .nav-tab { padding: 14px 30px; font-size: 1rem; }
-            .home-title { font-size: 2.5rem; }
-            .about-title { font-size: 2rem; }
-            .schedule-title { font-size: 2.5rem; }
-            .social-title { font-size: 2.5rem; }
-            .album-container { height: 500px; }
-            .album-text { font-size: 1.8rem; }
-            .about-text { font-size: 1.2rem; }
-            .icon-3d { width: 110px; height: 110px; font-size: 3rem; }
-            .social-btn { width: 80px; height: 80px; font-size: 2.2rem; }
-            .glass-card { padding: 40px; }
-        }
-
-        /* Tablet Landscape & Small Desktop (992px - 1199px) */
-        @media (min-width: 992px) and (max-width: 1199px) {
-            .marquee-content { font-size: 1.8rem; }
-            .profile-img { width: 140px; height: 140px; }
-            .clock { font-size: 2.2rem; }
-            .username { font-size: 3rem; letter-spacing: 6px; }
-            .header-subtitle { font-size: 1.1rem; }
-            .nav-tab { padding: 12px 25px; font-size: 0.95rem; }
-            .home-title { font-size: 2.2rem; }
-            .about-title { font-size: 1.8rem; }
-            .schedule-title { font-size: 2.2rem; }
-            .social-title { font-size: 2.2rem; }
-            .album-container { height: 450px; }
-            .album-text { font-size: 1.6rem; }
-            .about-text { font-size: 1.1rem; }
-            .icon-3d { width: 100px; height: 100px; font-size: 2.8rem; }
-            .social-btn { width: 75px; height: 75px; font-size: 2rem; }
-            .glass-card { padding: 35px; }
-        }
-
-        /* Tablet Portrait (768px - 991px) - iPad */
-        @media (min-width: 768px) and (max-width: 991px) {
-            .marquee-content { font-size: 1.6rem; letter-spacing: 2px; }
-            .profile-img { width: 130px; height: 130px; }
-            .clock { font-size: 2rem; }
-            .username { font-size: 2.8rem; letter-spacing: 5px; }
-            .header-subtitle { font-size: 1rem; }
-            .nav-tabs { gap: 10px; }
-            .nav-tab { padding: 11px 22px; font-size: 0.9rem; }
-            .home-title { font-size: 2rem; }
-            .about-title { font-size: 1.6rem; }
-            .schedule-title { font-size: 2rem; }
-            .social-title { font-size: 2rem; }
-            .album-container { height: 400px; }
-            .album-text { font-size: 1.4rem; }
-            .album-description { font-size: 1.05rem; }
-            .about-content { grid-template-columns: 1fr; gap: 30px; }
-            .about-text { font-size: 1.05rem; }
-            .about-text h3 { font-size: 1.25rem; }
-            .game-tag { font-size: 0.9rem; padding: 9px 16px; }
-            .icon-3d { width: 90px; height: 90px; font-size: 2.5rem; }
-            .schedule-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
-            .day-name { font-size: 1.2rem; }
-            .day-time { font-size: 0.95rem; }
-            .day-icon { font-size: 2rem; }
-            .social-btn { width: 70px; height: 70px; font-size: 1.9rem; }
-            .glass-card { padding: 30px; }
-        }
-
-        /* Mobile Large (576px - 767px) */
-        @media (min-width: 576px) and (max-width: 767px) {
-            .marquee-container { padding: 10px 0; }
-            .marquee-content { font-size: 1.4rem; letter-spacing: 2px; }
-            .header { padding: 25px 15px 15px; }
-            .profile-img { width: 120px; height: 120px; }
-            .clock { font-size: 1.8rem; margin: 12px 0; }
-            .username { font-size: 2.5rem; letter-spacing: 4px; }
-            .header-subtitle { font-size: 0.95rem; letter-spacing: 1px; }
-            .nav-tabs { gap: 8px; padding: 12px 15px; top: 45px; }
-            .nav-tab { padding: 10px 18px; font-size: 0.85rem; letter-spacing: 1px; }
-            .section { margin: 20px auto; padding: 0 12px; }
-            .home-title { font-size: 1.8rem; margin-bottom: 20px; }
-            .about-title { font-size: 1.4rem; margin-bottom: 20px; }
-            .schedule-title { font-size: 1.8rem; margin-bottom: 20px; }
-            .social-title { font-size: 1.8rem; margin-bottom: 20px; }
-            .album-container { height: 320px; margin: 20px 0; }
-            .album-text { font-size: 1.2rem; bottom: 35px; }
-            .album-description { font-size: 1rem; line-height: 1.8; }
-            .about-content { grid-template-columns: 1fr; gap: 25px; }
-            .about-text { font-size: 1rem; }
-            .about-text h3 { font-size: 1.15rem; margin: 15px 0 8px; }
-            .game-tag { font-size: 0.85rem; padding: 8px 14px; }
-            .about-3d-icons { gap: 15px; }
-            .icon-3d { width: 80px; height: 80px; font-size: 2.2rem; }
-            .schedule-description { font-size: 1rem; }
-            .schedule-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-            .schedule-card { padding: 15px; }
-            .day-name { font-size: 1.1rem; }
-            .day-time { font-size: 0.9rem; }
-            .day-icon { font-size: 1.8rem; margin-bottom: 8px; }
-            .social-links { gap: 20px; }
-            .social-btn { width: 65px; height: 65px; font-size: 1.8rem; }
-            .glass-card { padding: 25px; border-radius: 20px; }
-            .footer { padding: 20px; font-size: 0.85rem; }
-        }
-
-        /* Mobile Small (max-width: 575px) */
         @media (max-width: 575px) {
-            .marquee-container { padding: 8px 0; }
             .marquee-content { font-size: 1.2rem; letter-spacing: 1.5px; }
             .header { padding: 20px 12px 12px; }
             .profile-img { width: 110px; height: 110px; }
-            .live-indicator { padding: 5px 12px; font-size: 0.75rem; bottom: 8px; right: 8px; }
-            .live-dot { width: 8px; height: 8px; }
             .clock { font-size: 1.6rem; margin: 10px 0; }
             .username { font-size: 2.2rem; letter-spacing: 3px; margin: 8px 0; }
             .header-subtitle { font-size: 0.85rem; letter-spacing: 1px; margin-top: 6px; }
@@ -1268,30 +1234,6 @@
             .social-btn { width: 60px; height: 60px; font-size: 1.7rem; }
             .glass-card { padding: 20px; border-radius: 18px; }
             .footer { padding: 18px; font-size: 0.8rem; margin-top: 30px; }
-        }
-
-        /* Extra Small Mobile (max-width: 380px) */
-        @media (max-width: 380px) {
-            .marquee-content { font-size: 1rem; }
-            .profile-img { width: 100px; height: 100px; }
-            .clock { font-size: 1.4rem; }
-            .username { font-size: 1.9rem; letter-spacing: 2px; }
-            .header-subtitle { font-size: 0.8rem; }
-            .nav-tab { padding: 8px 12px; font-size: 0.7rem; }
-            .home-title, .schedule-title, .social-title { font-size: 1.4rem; }
-            .about-title { font-size: 1.1rem; }
-            .album-container { height: 250px; }
-            .album-text { font-size: 1rem; }
-            .album-description { font-size: 0.9rem; }
-            .about-text { font-size: 0.9rem; }
-            .game-tag { font-size: 0.75rem; padding: 6px 10px; }
-            .icon-3d { width: 65px; height: 65px; font-size: 1.8rem; }
-            .schedule-card { padding: 12px 8px; }
-            .day-name { font-size: 0.9rem; }
-            .day-time { font-size: 0.8rem; }
-            .day-icon { font-size: 1.4rem; }
-            .social-btn { width: 55px; height: 55px; font-size: 1.5rem; }
-            .glass-card { padding: 18px; }
         }
 
         /* Loading Animation */
@@ -1332,62 +1274,6 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(0.95); }
         }
-
-        /* Touch Device Optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            .nav-tab:hover,
-            .game-tag:hover,
-            .icon-3d:hover,
-            .schedule-card:hover,
-            .social-btn:hover {
-                transform: none;
-            }
-            
-            .nav-tab:active {
-                transform: scale(0.95);
-            }
-            
-            .social-btn:active {
-                transform: scale(0.9);
-            }
-        }
-
-        /* Theme Overrides */
-        .theme-1 .spec-card, .theme-1 .pc-specs-header, .theme-1 .poll-container, .theme-1 .today-game {
-            --theme-bg: rgba(200, 100, 150, 0.25);
-            --theme-border: rgba(255, 150, 200, 0.3);
-            --theme-gradient: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-        }
-
-        .theme-2 .spec-card, .theme-2 .pc-specs-header, .theme-2 .poll-container, .theme-2 .today-game {
-            --theme-bg: rgba(100, 50, 150, 0.25);
-            --theme-border: rgba(150, 100, 255, 0.3);
-            --theme-gradient: linear-gradient(135deg, #8e7cc3, #a67fc9);
-        }
-
-        .theme-3 .spec-card, .theme-3 .pc-specs-header, .theme-3 .poll-container, .theme-3 .today-game {
-            --theme-bg: rgba(50, 150, 200, 0.25);
-            --theme-border: rgba(100, 200, 255, 0.3);
-            --theme-gradient: linear-gradient(135deg, #48dbfb, #1dd1a1);
-        }
-
-        .theme-4 .spec-card, .theme-4 .pc-specs-header, .theme-4 .poll-container, .theme-4 .today-game {
-            --theme-bg: rgba(200, 50, 50, 0.25);
-            --theme-border: rgba(255, 100, 100, 0.3);
-            --theme-gradient: linear-gradient(135deg, #ff9f43, #ff6b6b);
-        }
-
-        .theme-5 .spec-card, .theme-5 .pc-specs-header, .theme-5 .poll-container, .theme-5 .today-game {
-            --theme-bg: rgba(150, 150, 150, 0.25);
-            --theme-border: rgba(255, 255, 255, 0.3);
-            --theme-gradient: linear-gradient(135deg, #576574, #808e9b);
-        }
-
-        .theme-6 .spec-card, .theme-6 .pc-specs-header, .theme-6 .poll-container, .theme-6 .today-game {
-            --theme-bg: rgba(50, 100, 150, 0.25);
-            --theme-border: rgba(100, 150, 255, 0.3);
-            --theme-gradient: linear-gradient(135deg, #48dbfb, #0abde3);
-        }
     </style>
 </head>
 <body>
@@ -1409,9 +1295,10 @@
     <header class="header">
         <div class="profile-container">
             <img src="SS.jpg" alt="2B Profile" class="profile-img" onerror="this.src='https://via.placeholder.com/150x150/00d4ff/000000?text=2B'">
-            <div class="live-indicator" id="liveIndicator">
-                <span class="live-dot"></span>
-                <span>بث مباشر الآن</span>
+            <!-- Discord Notification Indicator - بديل عن شعار البث -->
+            <div class="discord-notification-indicator" id="discordNotification">
+                <span class="notification-dot"></span>
+                <span>تنبيه جديد</span>
             </div>
         </div>
         
@@ -1653,7 +1540,7 @@
         </div>
     </section>
 
-    <!-- Poll Section -->
+    <!-- Poll Section - تفاعلي -->
     <section class="section" id="polls">
         <div class="glass-card">
             <h2 class="about-title">استطلاعات الرأي</h2>
@@ -1661,30 +1548,34 @@
             <div class="poll-container">
                 <div class="poll-question">ما هي اللعبة التي تريد رؤيتها في البث القادم؟</div>
                 
-                <div class="poll-options">
-                    <div class="poll-option" data-votes="45">
+                <div class="poll-options" id="pollOptions">
+                    <div class="poll-option" data-votes="45" onclick="voteForOption(this)">
                         <div class="poll-option-name">God of War: Ragnarök</div>
+                        <div class="poll-votes-count">45 صوت</div>
                         <div class="poll-option-progress">
                             <div class="poll-option-bar" style="width: 45%"></div>
                         </div>
                     </div>
                     
-                    <div class="poll-option" data-votes="30">
+                    <div class="poll-option" data-votes="30" onclick="voteForOption(this)">
                         <div class="poll-option-name">The Last of Us Part II</div>
+                        <div class="poll-votes-count">30 صوت</div>
                         <div class="poll-option-progress">
                             <div class="poll-option-bar" style="width: 30%"></div>
                         </div>
                     </div>
                     
-                    <div class="poll-option" data-votes="15">
+                    <div class="poll-option" data-votes="15" onclick="voteForOption(this)">
                         <div class="poll-option-name">Cyberpunk 2077</div>
+                        <div class="poll-votes-count">15 صوت</div>
                         <div class="poll-option-progress">
                             <div class="poll-option-bar" style="width: 15%"></div>
                         </div>
                     </div>
                     
-                    <div class="poll-option" data-votes="10">
+                    <div class="poll-option" data-votes="10" onclick="voteForOption(this)">
                         <div class="poll-option-name">Hogwarts Legacy</div>
+                        <div class="poll-votes-count">10 أصوات</div>
                         <div class="poll-option-progress">
                             <div class="poll-option-bar" style="width: 10%"></div>
                         </div>
@@ -1704,17 +1595,18 @@
         </div>
     </section>
 
-    <!-- Stream Notification -->
+    <!-- Stream Notification - Discord -->
     <div class="stream-notification" id="streamNotification">
         <div class="notification-title">بدء البث المباشر</div>
         <div class="notification-content">2B بدأ بثاً حياً على YouTube! انضم الآن لمشاهدة أفضل اللحظات.</div>
-        <button class="notification-button">الانضمام إلى البث</button>
+        <button class="notification-button" onclick="closeNotification()">الانضمام إلى البث</button>
     </div>
 
     <!-- Music Player -->
     <div class="music-player">
-        <div class="music-title">S.mp3</div>
+        <audio id="audioPlayer" src="S.mp3" preload="metadata"></audio>
         <div class="music-controls">
+            <div class="music-title">S.mp3</div>
             <div class="music-progress">
                 <div class="music-progress-bar" id="musicProgress"></div>
             </div>
@@ -1726,7 +1618,7 @@
         </div>
         <div class="music-volume">
             <i class="fas fa-volume-up volume-icon"></i>
-            <input type="range" class="volume-slider" min="0" max="100" value="70">
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
         </div>
     </div>
 
@@ -1767,13 +1659,6 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            const liveIndicator = document.getElementById('liveIndicator');
-            if (now.getHours() >= 20) {
-                liveIndicator.classList.add('active');
-            } else {
-                liveIndicator.classList.remove('active');
-            }
             
             updateSchedule(now.getDay(), now.getHours());
         }
@@ -1856,60 +1741,178 @@
             });
         }
 
-        // Theme Selector
+        // Theme Selector - يطبق على جميع الأقسام
         const themeButtons = document.querySelectorAll('.theme-btn');
         themeButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
                 document.body.className = '';
-                document.body.classList.add(`theme-${index}`);
+                if (index > 0) {
+                    document.body.classList.add(`theme-${index}`);
+                }
                 themeButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
             });
         });
 
-        // Stream Notification
-        const streamNotification = document.getElementById('streamNotification');
-        const notificationButton = document.querySelector('.notification-button');
-        
-        // Simulate stream start (in real scenario, this would be triggered by Discord)
-        setTimeout(() => {
-            streamNotification.classList.add('active');
-            notificationButton.addEventListener('click', () => {
-                streamNotification.classList.remove('active');
-                setTimeout(() => {
-                    streamNotification.classList.add('active');
-                }, 3000);
+        // Poll Voting System - تفاعلي
+        let hasVoted = false;
+        let totalVotes = 100; // إجمالي الأصوات
+
+        function voteForOption(element) {
+            if (hasVoted) {
+                alert('لقد صوتت بالفعل!');
+                return;
+            }
+
+            // إزالة التصويت السابق إن وجد
+            document.querySelectorAll('.poll-option').forEach(opt => {
+                opt.classList.remove('voted');
             });
+
+            // إضافة التصويت الحالي
+            element.classList.add('voted');
+            hasVoted = true;
+
+            // زيادة صوت واحد للخيار المختار
+            const currentVotes = parseInt(element.getAttribute('data-votes'));
+            const newVotes = currentVotes + 1;
+            element.setAttribute('data-votes', newVotes);
+            totalVotes++;
+
+            // تحديث جميع النسب المئوية
+            updatePollPercentages();
+
+            // حفظ التصويت في localStorage
+            localStorage.setItem('hasVotedPoll', 'true');
+            localStorage.setItem('votedOption', element.querySelector('.poll-option-name').textContent);
+        }
+
+        function updatePollPercentages() {
+            const options = document.querySelectorAll('.poll-option');
+            let maxVotes = 0;
+            let maxOption = null;
+
+            // إيجاد الخيار الأكثر تصويتاً
+            options.forEach(option => {
+                const votes = parseInt(option.getAttribute('data-votes'));
+                if (votes > maxVotes) {
+                    maxVotes = votes;
+                    maxOption = option;
+                }
+            });
+
+            // تحديث النسب المئوية
+            options.forEach(option => {
+                const votes = parseInt(option.getAttribute('data-votes'));
+                const percentage = ((votes / totalVotes) * 100).toFixed(1);
+                const progressBar = option.querySelector('.poll-option-bar');
+                const votesCount = option.querySelector('.poll-votes-count');
+                
+                progressBar.style.width = percentage + '%';
+                votesCount.textContent = votes + ' صوت' + (votes > 1 ? 's' : '');
+
+                // تمييز الخيار الأكثر تصويتاً
+                if (option === maxOption) {
+                    option.style.border = '2px solid #00ff00';
+                    option.style.background = 'rgba(0, 255, 0, 0.15)';
+                } else {
+                    option.style.border = '2px solid transparent';
+                    option.style.background = 'rgba(0, 0, 0, 0.2)';
+                }
+            });
+        }
+
+        // التحقق من التصويت السابق عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('hasVotedPoll') === 'true') {
+                hasVoted = true;
+                const votedOption = localStorage.getItem('votedOption');
+                document.querySelectorAll('.poll-option').forEach(option => {
+                    if (option.querySelector('.poll-option-name').textContent === votedOption) {
+                        option.classList.add('voted');
+                    }
+                });
+            }
+            updatePollPercentages();
+        });
+
+        // Discord Notification Simulation
+        const discordNotification = document.getElementById('discordNotification');
+        const streamNotification = document.getElementById('streamNotification');
+
+        // محاكاة وصول إشعار من Discord
+        function showDiscordNotification() {
+            discordNotification.classList.add('active');
+            setTimeout(() => {
+                discordNotification.classList.remove('active');
+                streamNotification.classList.add('active');
+            }, 3000);
+        }
+
+        function closeNotification() {
+            streamNotification.classList.remove('active');
+        }
+
+        // تشغيل الإشعار بعد 5 ثواني (للتجربة)
+        setTimeout(() => {
+            showDiscordNotification();
         }, 5000);
 
         // Music Player
+        const audioPlayer = document.getElementById('audioPlayer');
         const musicPlayBtn = document.getElementById('musicPlay');
         const musicProgress = document.getElementById('musicProgress');
-        const volumeSlider = document.querySelector('.volume-slider');
+        const volumeSlider = document.getElementById('volumeSlider');
         let isPlaying = false;
         let progressInterval;
 
         musicPlayBtn.addEventListener('click', () => {
             if (isPlaying) {
+                audioPlayer.pause();
                 musicPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
                 clearInterval(progressInterval);
                 isPlaying = false;
             } else {
-                musicPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                progressInterval = setInterval(() => {
-                    const width = musicProgress.style.width.replace('%', '');
-                    if (width < 100) {
-                        musicProgress.style.width = `${parseInt(width) + 0.5}%`;
-                    }
-                }, 500);
-                isPlaying = true;
+                audioPlayer.play().then(() => {
+                    musicPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    isPlaying = true;
+                    updateMusicProgress();
+                }).catch(error => {
+                    console.error('Error playing audio:', error);
+                    alert('تأكد من وجود ملف S.mp3 في نفس المجلد');
+                });
             }
         });
 
-        volumeSlider.addEventListener('input', () => {
-            const volume = volumeSlider.value;
-            // In real scenario, this would control the audio volume
+        function updateMusicProgress() {
+            if (audioPlayer.duration) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                musicProgress.style.width = progress + '%';
+            }
+            if (isPlaying) {
+                progressInterval = requestAnimationFrame(updateMusicProgress);
+            }
+        }
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (audioPlayer.duration) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                musicProgress.style.width = progress + '%';
+            }
         });
+
+        audioPlayer.addEventListener('ended', () => {
+            musicPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+            isPlaying = false;
+            musicProgress.style.width = '0%';
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            audioPlayer.volume = volumeSlider.value / 100;
+        });
+
+        // Set initial volume
+        audioPlayer.volume = 0.7;
 
         // Prevent zooming on mobile
         let lastTouchEnd = 0;
@@ -1924,6 +1927,57 @@
         document.addEventListener('gesturestart', (e) => {
             e.preventDefault();
         });
+
+        /*
+        ========================================
+        كيفية ربط Discord للموقع:
+        ========================================
+        
+        لربط إشعارات Discord مع الموقع، تحتاج إلى:
+        
+        1. **Discord Webhook URL**:
+           - اذهب إلى سيرفر Discord الخاص بك
+           - اضغط على إعدادات القناة (Channel Settings)
+           - اختر Integrations > Webhooks
+           - أنشئ Webhook جديد
+           - انسخ الـ Webhook URL
+        
+        2. **استخدام Webhook في الموقع**:
+           يمكنك استخدام JavaScript لإرسال طلبات إلى الـ Webhook
+           أو استخدام خدمة مثل Zapier أو IFTTT
+        
+        3. **الطريقة المقترحة**:
+           - استخدم Discord Bot مع token
+           - استمع إلى أحداث البث المباشر
+           - عند بدء البث، أرسل إشعار للموقع عبر WebSocket أو API
+        
+        4. **مثال بسيط باستخدام Fetch API**:
+        
+```javascript
+        async function sendDiscordNotification(message) {
+            const webhookURL = 'YOUR_WEBHOOK_URL_HERE';
+            
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: message
+                })
+            });
+        }
+```
+        
+        5. **للحصول على Token البوت**:
+           - اذهب إلى Discord Developer Portal
+           - أنشئ تطبيق جديد
+           - اذهب إلى Bot section
+           - انسخ الـ Token
+           - فعل Privileged Gateway Intents
+        
+        ========================================
+        */
     </script>
 </body>
 </html>
