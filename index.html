@@ -12,12 +12,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* منع تحديد النص */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            /* منع ظهور المستطيل الأزرق عند النقر الطويل */
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
         }
@@ -29,11 +27,13 @@
             --gold: #ffd700;
             --dark: #0a0a0a;
             --glass: rgba(10, 10, 10, 0.55);
+            --theme-bg: rgba(10, 10, 10, 0.55);
+            --theme-border: rgba(255, 255, 255, 0.1);
+            --theme-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
         html {
             scroll-behavior: smooth;
-            /* منع التقريب والتبعيد */
             overflow-x: hidden;
             width: 100%;
         }
@@ -52,7 +52,6 @@
             min-height: 100vh;
             position: relative;
             line-height: 1.6;
-            /* منع التقريب على الموبايل */
             touch-action: manipulation;
             -webkit-text-size-adjust: 100%;
         }
@@ -280,7 +279,7 @@
             background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--theme-border);
             border-radius: 25px;
             padding: 30px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
@@ -289,7 +288,7 @@
             transition: transform 0.3s ease;
         }
 
-        /* Section Titles - كلها بخط Cairo */
+        /* Section Titles */
         .home-title {
             font-family: 'Cairo', sans-serif;
             font-weight: 900;
@@ -638,6 +637,452 @@
             border-color: #fff;
         }
 
+        /* PC Specs Section */
+        .pc-specs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-btn.active {
+            transform: scale(1.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .theme-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            opacity: 0;
+        }
+
+        .theme-btn:hover::after {
+            opacity: 1;
+        }
+
+        .pc-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .spec-card {
+            background: var(--theme-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--theme-border);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .spec-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--theme-gradient);
+            z-index: -1;
+            border-radius: 27px;
+            filter: blur(10px);
+            opacity: 0.4;
+            transition: all 0.4s ease;
+        }
+
+        .spec-card:hover::before {
+            filter: blur(20px);
+            opacity: 0.7;
+        }
+
+        .spec-title {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--gold), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .spec-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spec-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .spec-details {
+            flex: 1;
+        }
+
+        .spec-name {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .spec-value {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Poll Section */
+        .poll-container {
+            background: var(--theme-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--theme-border);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+
+        .poll-question {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--gold), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .poll-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .poll-option {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .poll-option:hover {
+            transform: translateX(5px);
+        }
+
+        .poll-option-name {
+            padding: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .poll-option-progress {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .poll-option-bar {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+
+        /* Today's Game Section */
+        .today-game {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.7), rgba(0, 0, 0, 0.9));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .today-game::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            z-index: -1;
+            border-radius: 27px;
+            filter: blur(10px);
+            opacity: 0.4;
+        }
+
+        .today-game-title {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .game-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .game-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            margin: 0 auto;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .game-status {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 20px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Stream Notification */
+        .stream-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid #00ff00;
+            border-radius: 20px;
+            padding: 20px;
+            width: 350px;
+            max-width: 90%;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stream-notification.active {
+            transform: translateX(0);
+        }
+
+        .notification-title {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notification-content {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .notification-button {
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .notification-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 15px;
+            width: 300px;
+            max-width: 90%;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .music-controls {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .music-title {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--gold);
+        }
+
+        .music-progress {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2.5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .music-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            border-radius: 2.5px;
+        }
+
+        .music-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .music-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .music-volume {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 15px;
+        }
+
+        .volume-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 5px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2.5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -906,6 +1351,43 @@
                 transform: scale(0.9);
             }
         }
+
+        /* Theme Overrides */
+        .theme-1 .spec-card, .theme-1 .pc-specs-header, .theme-1 .poll-container, .theme-1 .today-game {
+            --theme-bg: rgba(200, 100, 150, 0.25);
+            --theme-border: rgba(255, 150, 200, 0.3);
+            --theme-gradient: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+
+        .theme-2 .spec-card, .theme-2 .pc-specs-header, .theme-2 .poll-container, .theme-2 .today-game {
+            --theme-bg: rgba(100, 50, 150, 0.25);
+            --theme-border: rgba(150, 100, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #8e7cc3, #a67fc9);
+        }
+
+        .theme-3 .spec-card, .theme-3 .pc-specs-header, .theme-3 .poll-container, .theme-3 .today-game {
+            --theme-bg: rgba(50, 150, 200, 0.25);
+            --theme-border: rgba(100, 200, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #48dbfb, #1dd1a1);
+        }
+
+        .theme-4 .spec-card, .theme-4 .pc-specs-header, .theme-4 .poll-container, .theme-4 .today-game {
+            --theme-bg: rgba(200, 50, 50, 0.25);
+            --theme-border: rgba(255, 100, 100, 0.3);
+            --theme-gradient: linear-gradient(135deg, #ff9f43, #ff6b6b);
+        }
+
+        .theme-5 .spec-card, .theme-5 .pc-specs-header, .theme-5 .poll-container, .theme-5 .today-game {
+            --theme-bg: rgba(150, 150, 150, 0.25);
+            --theme-border: rgba(255, 255, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #576574, #808e9b);
+        }
+
+        .theme-6 .spec-card, .theme-6 .pc-specs-header, .theme-6 .poll-container, .theme-6 .today-game {
+            --theme-bg: rgba(50, 100, 150, 0.25);
+            --theme-border: rgba(100, 150, 255, 0.3);
+            --theme-gradient: linear-gradient(135deg, #48dbfb, #0abde3);
+        }
     </style>
 </head>
 <body>
@@ -944,6 +1426,9 @@
         <button class="nav-tab" data-section="about">👤 نبذة عني</button>
         <button class="nav-tab" data-section="schedule">⏰ أوقات اللعب</button>
         <button class="nav-tab" data-section="social">🔗 تابعني</button>
+        <button class="nav-tab" data-section="pc-specs">💻 مواصفات الجهاز</button>
+        <button class="nav-tab" data-section="polls">📊 استطلاعات الرأي</button>
+        <button class="nav-tab" data-section="today-game">🎮 لعبة اليوم</button>
     </nav>
 
     <!-- Home Section -->
@@ -1083,6 +1568,168 @@
         </div>
     </section>
 
+    <!-- PC Specs Section -->
+    <section class="section" id="pc-specs">
+        <div class="glass-card">
+            <h2 class="about-title">مواصفات الجهاز</h2>
+            <div class="pc-specs-header">
+                <div class="spec-title">جهازي الفخم</div>
+                <div class="theme-selector">
+                    <div class="theme-btn active" data-theme="0" style="background: linear-gradient(135deg, #00d4ff, #7b2cbf);"></div>
+                    <div class="theme-btn" data-theme="1" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);"></div>
+                    <div class="theme-btn" data-theme="2" style="background: linear-gradient(135deg, #8e7cc3, #a67fc9);"></div>
+                    <div class="theme-btn" data-theme="3" style="background: linear-gradient(135deg, #48dbfb, #1dd1a1);"></div>
+                    <div class="theme-btn" data-theme="4" style="background: linear-gradient(135deg, #ff9f43, #ff6b6b);"></div>
+                    <div class="theme-btn" data-theme="5" style="background: linear-gradient(135deg, #576574, #808e9b);"></div>
+                    <div class="theme-btn" data-theme="6" style="background: linear-gradient(135deg, #48dbfb, #0abde3);"></div>
+                </div>
+            </div>
+            
+            <div class="pc-specs">
+                <div class="spec-card">
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">المعالج</div>
+                            <div class="spec-value">AMD Ryzen 9 7950X3D</div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-memory"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">الذاكرة العشوائية</div>
+                            <div class="spec-value">64GB DDR5 6000MHz</div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">التخزين</div>
+                            <div class="spec-value">2TB NVMe SSD + 8TB HDD</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="spec-card">
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">بطاقة الشاشة</div>
+                            <div class="spec-value">NVIDIA GeForce RTX 4090</div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">فأرة</div>
+                            <div class="spec-value">Logitech G Pro X Superlight</div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <div class="spec-details">
+                            <div class="spec-name">لوحة المفاتيح</div>
+                            <div class="spec-value">Razer Huntsman V2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poll Section -->
+    <section class="section" id="polls">
+        <div class="glass-card">
+            <h2 class="about-title">استطلاعات الرأي</h2>
+            
+            <div class="poll-container">
+                <div class="poll-question">ما هي اللعبة التي تريد رؤيتها في البث القادم؟</div>
+                
+                <div class="poll-options">
+                    <div class="poll-option" data-votes="45">
+                        <div class="poll-option-name">God of War: Ragnarök</div>
+                        <div class="poll-option-progress">
+                            <div class="poll-option-bar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" data-votes="30">
+                        <div class="poll-option-name">The Last of Us Part II</div>
+                        <div class="poll-option-progress">
+                            <div class="poll-option-bar" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" data-votes="15">
+                        <div class="poll-option-name">Cyberpunk 2077</div>
+                        <div class="poll-option-progress">
+                            <div class="poll-option-bar" style="width: 15%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" data-votes="10">
+                        <div class="poll-option-name">Hogwarts Legacy</div>
+                        <div class="poll-option-progress">
+                            <div class="poll-option-bar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Game Section -->
+    <section class="section" id="today-game">
+        <div class="today-game">
+            <div class="today-game-title">لعبة اليوم</div>
+            <div class="game-name">GTA V</div>
+            <img src="S1.jpg" alt="GTA V" class="game-image">
+            <div class="game-status">جاري اللعب الآن!</div>
+        </div>
+    </section>
+
+    <!-- Stream Notification -->
+    <div class="stream-notification" id="streamNotification">
+        <div class="notification-title">بدء البث المباشر</div>
+        <div class="notification-content">2B بدأ بثاً حياً على YouTube! انضم الآن لمشاهدة أفضل اللحظات.</div>
+        <button class="notification-button">الانضمام إلى البث</button>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="music-title">S.mp3</div>
+        <div class="music-controls">
+            <div class="music-progress">
+                <div class="music-progress-bar" id="musicProgress"></div>
+            </div>
+            <div class="music-buttons">
+                <button class="music-btn" id="musicPrev"><i class="fas fa-backward"></i></button>
+                <button class="music-btn" id="musicPlay"><i class="fas fa-play"></i></button>
+                <button class="music-btn" id="musicNext"><i class="fas fa-forward"></i></button>
+            </div>
+        </div>
+        <div class="music-volume">
+            <i class="fas fa-volume-up volume-icon"></i>
+            <input type="range" class="volume-slider" min="0" max="100" value="70">
+        </div>
+    </div>
+
     <footer class="footer">
         <p style="font-family: 'Audiowide', sans-serif; letter-spacing: 1.5px;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
     </footer>
@@ -1209,7 +1856,62 @@
             });
         }
 
-        // منع التكبير بالضغط المزدوج على الموبايل
+        // Theme Selector
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        themeButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                document.body.className = '';
+                document.body.classList.add(`theme-${index}`);
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Stream Notification
+        const streamNotification = document.getElementById('streamNotification');
+        const notificationButton = document.querySelector('.notification-button');
+        
+        // Simulate stream start (in real scenario, this would be triggered by Discord)
+        setTimeout(() => {
+            streamNotification.classList.add('active');
+            notificationButton.addEventListener('click', () => {
+                streamNotification.classList.remove('active');
+                setTimeout(() => {
+                    streamNotification.classList.add('active');
+                }, 3000);
+            });
+        }, 5000);
+
+        // Music Player
+        const musicPlayBtn = document.getElementById('musicPlay');
+        const musicProgress = document.getElementById('musicProgress');
+        const volumeSlider = document.querySelector('.volume-slider');
+        let isPlaying = false;
+        let progressInterval;
+
+        musicPlayBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                musicPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                clearInterval(progressInterval);
+                isPlaying = false;
+            } else {
+                musicPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                progressInterval = setInterval(() => {
+                    const width = musicProgress.style.width.replace('%', '');
+                    if (width < 100) {
+                        musicProgress.style.width = `${parseInt(width) + 0.5}%`;
+                    }
+                }, 500);
+                isPlaying = true;
+            }
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            const volume = volumeSlider.value;
+            // In real scenario, this would control the audio volume
+        });
+
+        // Prevent zooming on mobile
         let lastTouchEnd = 0;
         document.addEventListener('touchend', (event) => {
             const now = (new Date()).getTime();
@@ -1219,7 +1921,6 @@
             lastTouchEnd = now;
         }, false);
 
-        // منع التكبير بـ pinch zoom
         document.addEventListener('gesturestart', (e) => {
             e.preventDefault();
         });
