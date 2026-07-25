@@ -2,10 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="2B Gaming - PC & PS2 Gaming Master">
-    <title>2B - Gaming World</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Audiowide&family=Bungee&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2B Gaming - نظام التصويت المتقدم</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs/3.3.3/fingerprint.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Bungee&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,11 +14,7 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
 
         :root {
@@ -26,1020 +23,1134 @@
             --accent: #ff006e;
             --gold: #ffd700;
             --dark: #0a0a0a;
-            --theme-bg: rgba(10, 10, 10, 0.55);
-            --theme-border: rgba(255, 255, 255, 0.1);
-            --theme-gradient: linear-gradient(135deg, #00d4ff, #7b2cbf);
-        }
-
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-            width: 100%;
+            --glass: rgba(10, 10, 10, 0.7);
         }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: 
-                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url('S.jpg');
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('S.jpg');
             background-size: cover;
-            background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
             color: #fff;
-            overflow-x: hidden;
             min-height: 100vh;
-            position: relative;
-            line-height: 1.6;
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
-            transition: all 0.5s ease;
+            overflow-x: hidden;
         }
 
-        /* Theme Classes */
-        body.theme-1 { --theme-bg: rgba(200, 100, 150, 0.25); --theme-border: rgba(255, 150, 200, 0.3); --theme-gradient: linear-gradient(135deg, #ff6b6b, #ff8e8e); --primary: #ff6b6b; --secondary: #ff8e8e; }
-        body.theme-2 { --theme-bg: rgba(100, 50, 150, 0.25); --theme-border: rgba(150, 100, 255, 0.3); --theme-gradient: linear-gradient(135deg, #8e7cc3, #a67fc9); --primary: #8e7cc3; --secondary: #a67fc9; }
-        body.theme-3 { --theme-bg: rgba(50, 150, 200, 0.25); --theme-border: rgba(100, 200, 255, 0.3); --theme-gradient: linear-gradient(135deg, #48dbfb, #1dd1a1); --primary: #48dbfb; --secondary: #1dd1a1; }
-        body.theme-4 { --theme-bg: rgba(200, 50, 50, 0.25); --theme-border: rgba(255, 100, 100, 0.3); --theme-gradient: linear-gradient(135deg, #ff9f43, #ff6b6b); --primary: #ff9f43; --secondary: #ff6b6b; }
-        body.theme-5 { --theme-bg: rgba(150, 150, 150, 0.25); --theme-border: rgba(255, 255, 255, 0.3); --theme-gradient: linear-gradient(135deg, #576574, #808e9b); --primary: #576574; --secondary: #808e9b; }
-        body.theme-6 { --theme-bg: rgba(50, 100, 150, 0.25); --theme-border: rgba(100, 150, 255, 0.3); --theme-gradient: linear-gradient(135deg, #48dbfb, #0abde3); --primary: #48dbfb; --secondary: #0abde3; }
-
-        /* Marquee */
-        .marquee-container {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 12px 0;
-            overflow: hidden;
-            border-top: 1px solid rgba(0, 212, 255, 0.3);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .marquee-content {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 25s linear infinite, gradient 5s ease infinite;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e, #ffd700, #00d4ff);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes gradient { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-
-        /* Header */
         .header {
-            padding: 30px 20px 20px;
             text-align: center;
-            position: relative;
-        }
-
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .profile-img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            background: linear-gradient(var(--dark), var(--dark)) padding-box,
-                        linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)) border-box;
-            object-fit: cover;
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
-            animation: profileGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes profileGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.4); }
-            50% { box-shadow: 0 0 60px rgba(123, 44, 191, 0.6); }
-        }
-
-        .clock-container {
-            margin: 15px 0;
+            padding: 30px 0;
         }
 
         .clock {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', monospace;
             font-size: 2.5rem;
-            font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin: 20px 0;
         }
 
-        .date-display {
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 5px;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .date-display i {
-            color: var(--gold);
-        }
-
-        .username {
-            font-family: 'Bungee', sans-serif;
-            font-size: 3rem;
-            font-weight: 400;
-            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-        }
-
-        .header-subtitle {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.85);
-            margin-top: 8px;
-            letter-spacing: 1.5px;
-            font-family: 'Audiowide', sans-serif;
-        }
-
-        /* Navigation Tabs */
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            padding: 15px 20px;
-            margin: 15px auto;
-            max-width: 1200px;
-            position: sticky;
-            top: 50px;
-            z-index: 99;
-        }
-
-        .nav-tab {
-            padding: 12px 24px;
-            background: var(--theme-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--theme-border);
-            border-radius: 50px;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-tab:hover::before { left: 100%; }
-        .nav-tab:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4); }
-        .nav-tab.active { background: var(--theme-gradient); border-color: transparent; box-shadow: 0 10px 30px rgba(123, 44, 191, 0.6); transform: translateY(-3px); }
-
-        /* Sections */
-        .section {
-            display: none;
-            animation: fadeIn 0.6s ease-in-out;
-            max-width: 1200px;
-            margin: 25px auto;
-            padding: 0 15px;
-        }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Glass Card */
         .glass-card {
-            background: var(--theme-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--theme-border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 25px;
             padding: 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: var(--theme-gradient);
-            z-index: -1;
-            border-radius: 27px;
-            filter: blur(10px);
-            opacity: 0.3;
-            transition: all 0.5s ease;
-        }
-        .glass-card:hover::before { filter: blur(20px); opacity: 0.6; }
 
-        /* Titles */
         .section-title {
-            font-family: 'Cairo', sans-serif;
-            font-weight: 900;
+            font-family: 'Bungee', cursive;
             font-size: 2rem;
-            margin-bottom: 25px;
             text-align: center;
+            margin-bottom: 30px;
             background: linear-gradient(135deg, var(--gold), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
-
-        /* Album */
-        .album-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 25px 0;
-            box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .album-slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center; }
-        .album-slide.active { opacity: 1; }
-        .album-slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.85)); }
-        .album-text {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 10;
-            font-size: 1.5rem; font-weight: 700; text-shadow: 0 0 20px rgba(0, 0, 0, 0.9); color: var(--gold);
-            font-family: 'Cairo', sans-serif; letter-spacing: 2px; width: 90%;
-        }
-        .album-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: all 0.3s; }
-        .dot.active { background: var(--primary); transform: scale(1.4); box-shadow: 0 0 15px var(--primary); }
-        .album-description { text-align: center; font-size: 1.15rem; line-height: 2; margin-top: 20px; color: rgba(255,255,255,0.95); }
-
-        /* My Info Section */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-        .info-item {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--theme-border);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .info-item:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(0, 212, 255, 0.3); }
-        .info-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            background: var(--theme-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
-        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .info-label { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 5px; font-family: 'Audiowide', sans-serif; letter-spacing: 1px; }
-        .info-value { font-size: 1.4rem; font-weight: 900; color: var(--gold); font-family: 'Cairo', sans-serif; }
-
-        .games-showcase {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .game-chip {
-            background: var(--theme-gradient);
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .game-chip:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4); }
-
-        /* Schedule */
-        .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 25px; }
-        .schedule-card {
-            background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(10px); border: 1px solid var(--theme-border);
-            border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        .schedule-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4); border-color: var(--primary); }
-        .schedule-card.active { background: linear-gradient(135deg, rgba(0, 255, 0, 0.15), rgba(0, 212, 255, 0.15)); border-color: #00ff00; box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); animation: activeGlow 2s ease-in-out infinite; }
-        @keyframes activeGlow { 0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); } 50% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.8); } }
-        .day-name { font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
-        .day-time { font-size: 1rem; color: var(--primary); font-weight: 600; }
-        .day-icon { font-size: 2.2rem; margin-bottom: 10px; color: var(--accent); }
-
-        /* Social */
-        .social-links { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 25px; }
-        .social-btn {
-            width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; color: #fff; text-decoration: none; transition: all 0.3s; border: 2px solid transparent;
-        }
-        .social-btn.discord { background: linear-gradient(135deg, #5865F2, #4752C4); }
-        .social-btn.tiktok { background: linear-gradient(135deg, #000000, #25F4EE); }
-        .social-btn.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .social-btn.youtube { background: linear-gradient(135deg, #FF0000, #CC0000); }
-        .social-btn:hover { transform: translateY(-10px) scale(1.1); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); border-color: #fff; }
-
-        /* PC Specs */
-        .pc-specs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .theme-selector { display: flex; gap: 10px; flex-wrap: wrap; }
-        .theme-btn {
-            width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.3);
-            cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        .theme-btn.active { transform: scale(1.2); border-color: var(--primary); box-shadow: 0 0 20px var(--primary); }
-        .pc-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .spec-card {
-            background: var(--theme-bg); backdrop-filter: blur(15px); border: 1px solid var(--theme-border);
-            border-radius: 25px; padding: 25px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; transition: all 0.4s ease;
-        }
-        .spec-card::before {
-            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: var(--theme-gradient); z-index: -1; border-radius: 27px; filter: blur(10px); opacity: 0.4; transition: all 0.4s ease;
-        }
-        .spec-card:hover::before { filter: blur(20px); opacity: 0.7; }
-        .spec-item { display: flex; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .spec-icon {
-            width: 60px; height: 60px; background: var(--theme-gradient); border-radius: 20px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-left: 15px; flex-shrink: 0;
-        }
-        .spec-name { font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--gold); margin-bottom: 5px; }
-        .spec-value { font-family: 'Cairo', sans-serif; font-size: 1.1rem; color: rgba(255, 255, 255, 0.9); }
 
         /* Poll Section */
         .poll-container {
-            background: var(--theme-bg); backdrop-filter: blur(15px); border: 1px solid var(--theme-border);
-            border-radius: 25px; padding: 30px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
-        .poll-options { display: flex; flex-direction: column; gap: 15px; }
-        .poll-option {
-            background: rgba(0, 0, 0, 0.2); border-radius: 15px; overflow: hidden; cursor: pointer;
-            transition: all 0.3s; position: relative; border: 2px solid transparent; display: flex; align-items: center; justify-content: space-between; padding: 15px;
-        }
-        .poll-option:hover { transform: translateX(-5px); border-color: var(--primary); }
-        .poll-option.voted { border-color: #00ff00; background: rgba(0, 255, 0, 0.1); }
-        .poll-option-info { flex: 1; z-index: 2; }
-        .poll-option-name { font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.2rem; color: rgba(255, 255, 255, 0.9); }
-        .poll-votes-count { font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1rem; color: var(--gold); margin-top: 5px; }
-        .poll-option-progress { width: 150px; height: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; overflow: hidden; flex-shrink: 0; margin-right: 15px; }
-        .poll-option-bar { height: 100%; border-radius: 5px; background: var(--theme-gradient); width: 0%; transition: width 1.5s ease-out; }
 
-        /* Today's Game Section */
-        .today-game {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.7), rgba(0, 0, 0, 0.9));
-            backdrop-filter: blur(10px); border: 1px solid var(--theme-border); border-radius: 25px;
-            padding: 40px 30px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; margin-top: 25px; text-align: center;
+        .game-card {
+            background: rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .today-game::before {
-            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: var(--theme-gradient); z-index: -1; border-radius: 27px; filter: blur(10px); opacity: 0.4;
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0,212,255,0.3);
         }
-        .game-name {
-            font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
-            background: linear-gradient(135deg, var(--gold), var(--primary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 20px 0;
+
+        .game-card.voted {
+            border-color: #00ff00;
+            background: rgba(0,255,0,0.1);
         }
+
+        .game-card.most-voted {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255,215,0,0.5);
+        }
+
         .game-image {
-            width: 100%; max-width: 500px; height: auto; border-radius: 20px;
-            margin: 0 auto; display: block; /* Centered */
-            border: 2px solid var(--theme-border); box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
         }
 
-        /* Alerts Section (New) */
-        .alerts-list { display: flex; flex-direction: column; gap: 20px; }
-        .alert-item {
-            background: rgba(0, 0, 0, 0.3); border-right: 4px solid var(--primary);
-            border-radius: 15px; padding: 20px; display: flex; align-items: flex-start; gap: 15px;
+        .game-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+
+        .vote-bar {
+            height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .vote-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .vote-count {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-top: 10px;
+        }
+
+        .voters-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .voters-list.show {
+            display: block;
+        }
+
+        .voter-item {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .voter-item:last-child {
+            border-bottom: none;
+        }
+
+        .voter-name {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .voter-time {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--glass);
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,212,255,0.5);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
             transition: all 0.3s;
         }
-        .alert-item:hover { background: rgba(0, 0, 0, 0.5); transform: translateX(-5px); }
-        .alert-icon {
-            font-size: 1.8rem; color: var(--gold); margin-top: 5px; flex-shrink: 0;
-        }
-        .alert-content h4 { font-size: 1.2rem; color: var(--primary); margin-bottom: 8px; font-weight: 700; }
-        .alert-content p { font-size: 1rem; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
 
-        /* Toast Notification */
-        .toast-container {
-            position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-100px);
-            z-index: 1001; opacity: 0; transition: all 0.5s ease;
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0,212,255,0.3);
         }
-        .toast-container.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,212,255,0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: #fff;
+        }
+
+        /* Top Visitors */
+        .top-visitors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .visitor-card {
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .visitor-rank {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .visitor-info {
+            flex: 1;
+        }
+
+        .visitor-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .visitor-stats {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Timer */
+        .countdown {
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(255,0,110,0.5);
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
         .toast {
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); border: 2px solid #00ff00;
-            border-radius: 20px; padding: 20px 40px; box-shadow: 0 10px 40px rgba(0, 255, 0, 0.5);
-            display: flex; align-items: center; gap: 15px; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff;
-        }
-        .toast-icon {
-            width: 40px; height: 40px; background: #00ff00; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #000; animation: toastBounce 0.5s ease;
-        }
-        @keyframes toastBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-
-        /* Music Player */
-        .music-player {
-            position: fixed; bottom: 20px; right: 20px; background: var(--theme-bg); backdrop-filter: blur(15px);
-            border: 1px solid var(--theme-border); border-radius: 25px; padding: 15px; width: 300px; max-width: 90%;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); z-index: 1000; display: flex; align-items: center; gap: 15px;
-        }
-        .music-controls { display: flex; flex-direction: column; flex: 1; }
-        .music-title { font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; color: var(--gold); }
-        .music-progress { height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 2.5px; overflow: hidden; margin-bottom: 8px; }
-        .music-progress-bar { height: 100%; background: var(--theme-gradient); width: 0%; border-radius: 2.5px; transition: width 0.3s; }
-        .music-buttons { display: flex; gap: 10px; }
-        .music-btn {
-            background: rgba(255, 255, 255, 0.1); border: none; width: 40px; height: 40px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s;
-        }
-        .music-btn:hover { background: var(--primary); transform: scale(1.1); }
-        .music-volume { display: flex; align-items: center; gap: 10px; margin-right: 15px; }
-        .volume-icon { font-size: 1.2rem; color: var(--primary); }
-        .volume-slider {
-            width: 80px; height: 5px; -webkit-appearance: none; background: rgba(255, 255, 255, 0.1); border-radius: 2.5px; outline: none;
-        }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--primary); cursor: pointer; }
-
-        /* Footer */
-        .footer {
-            text-align: center; padding: 25px; color: rgba(255,255,255,0.7); font-size: 0.9rem;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); margin-top: 40px; font-family: 'Cairo', sans-serif;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(0,0,0,0.95);
+            border: 2px solid var(--primary);
+            padding: 20px 40px;
+            border-radius: 15px;
+            z-index: 2000;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        /* Loading Animation */
-        .loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark);
-            display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s;
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
         }
-        .loader.hidden { opacity: 0; pointer-events: none; }
-        .loader-text {
-            font-family: 'Cairo', sans-serif; font-weight: 900; font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: loadingPulse 1.5s ease-in-out infinite;
-        }
-        @keyframes loadingPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.95); } }
 
-        /* Responsive */
-        @media (max-width: 575px) {
-            .clock { font-size: 2rem; }
-            .date-display { font-size: 0.95rem; flex-direction: column; gap: 5px; }
-            .username { font-size: 2.2rem; letter-spacing: 3px; }
-            .nav-tab { padding: 10px 15px; font-size: 0.85rem; }
-            .section-title { font-size: 1.6rem; }
-            .game-name { font-size: 2.5rem; }
-            .poll-option { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .poll-option-progress { width: 100%; margin-right: 0; }
-            .info-grid { grid-template-columns: 1fr; }
+        .toast.error { border-color: #ff0000; }
+        .toast.success { border-color: #00ff00; }
+
+        /* ========================================== */
+        /* === إضافة جديدة: أنماط لوحة التحكم === */
+        /* ========================================== */
+        .admin-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border: 2px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-toggle-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .admin-panel {
+            display: none;
+            border: 2px solid var(--accent);
+        }
+
+        .admin-panel.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .admin-form label {
+            font-weight: 700;
+            color: var(--gold);
+            text-align: right;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .poll-container { grid-template-columns: 1fr; }
+            .clock { font-size: 1.8rem; }
+            .section-title { font-size: 1.5rem; }
+            .admin-toggle-btn { bottom: 20px; left: 20px; width: 50px; height: 50px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Loader -->
-    <div class="loader" id="loader">
-        <div class="loader-text">2B GAMING</div>
-    </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer">
-        <div class="toast">
-            <div class="toast-icon"><i class="fas fa-check"></i></div>
-            <div>تم تصويتك بنجاح!</div>
+    <div class="container">
+        <div class="header">
+            <h1 style="font-family: 'Bungee', cursive; font-size: 3rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                2B GAMING
+            </h1>
+            <div class="clock" id="clock">00:00:00</div>
+            <div id="dateDisplay" style="color: rgba(255,255,255,0.8); margin-top: 10px;"></div>
         </div>
-    </div>
 
-    <!-- Marquee -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            GAMING 2B THE PC <i class="fas fa-star" style="font-size: 1rem; vertical-align: middle; margin: 0 10px;"></i> PLAYSTATION 2 <i class="fas fa-star" style="font-size: 1rem; vertical-align: middle; margin: 0 10px;"></i> PC GAMING <i class="fas fa-star" style="font-size: 1rem; vertical-align: middle; margin: 0 10px;"></i> LIVE STREAMING
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="profile-container">
-            <img src="SS.jpg" alt="2B Profile" class="profile-img" onerror="this.src='https://via.placeholder.com/150x150/00d4ff/000000?text=2B'">
-        </div>
-        
-        <div class="clock-container">
-            <div class="clock" id="clock">00:00:00 AM</div>
-            <div class="date-display">
-                <i class="fas fa-calendar-alt"></i>
-                <span id="fullDate">جاري التحميل...</span>
-            </div>
-        </div>
-        
-        <h1 class="username">2B</h1>
-        <p class="header-subtitle">PC & PS2 Gaming Master</p>
-    </header>
-
-    <!-- Navigation Tabs (No Emojis, Only Icons) -->
-    <nav class="nav-tabs">
-        <button class="nav-tab active" data-section="home"><i class="fas fa-house"></i> الرئيسية</button>
-        <button class="nav-tab" data-section="info"><i class="fas fa-user-astronaut"></i> معلوماتي</button>
-        <button class="nav-tab" data-section="schedule"><i class="fas fa-clock"></i> أوقات اللعب</button>
-        <button class="nav-tab" data-section="pc-specs"><i class="fas fa-microchip"></i> مواصفات الجهاز</button>
-        <button class="nav-tab" data-section="polls"><i class="fas fa-chart-pie"></i> استطلاعات الرأي</button>
-        <button class="nav-tab" data-section="today-game"><i class="fas fa-gamepad"></i> لعبة اليوم</button>
-        <button class="nav-tab" data-section="alerts"><i class="fas fa-bell"></i> تنبيهات</button>
-        <button class="nav-tab" data-section="social"><i class="fas fa-share-nodes"></i> تابعني</button>
-    </nav>
-
-    <!-- Home Section -->
-    <section class="section active" id="home">
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-images"></i> معرض الألعاب</h2>
-            <div class="album-container" id="albumContainer">
-                <div class="album-slide active" style="background-image: url('S1.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S2.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S3.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S4.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S5.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S6.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S7.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S8.jpg')"></div>
-                <div class="album-slide" style="background-image: url('S9.jpg')"></div>
-                <div class="album-text" id="albumText">أفضل الألعاب والمغامرات</div>
-                <div class="album-dots" id="albumDots"></div>
-            </div>
-            <p class="album-description">
-                مرحباً بك في موقعي الشخصي! أنا <strong style="color: var(--primary);">2B</strong>، لاعب محترف في ألعاب PC و PS2.<br>
-                أشارك معكم أفضل اللحظات والألعاب المثيرة. تابعوني على منصات التواصل الاجتماعي!
-            </p>
-        </div>
-    </section>
-
-    <!-- My Info Section (Revamped) -->
-    <section class="section" id="info">
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-id-card-clip"></i> معلوماتي</h2>
+        <!-- ========================================== -->
+        <!-- === إضافة جديدة: لوحة التحكم (مخفية) === -->
+        <!-- ========================================== -->
+        <div class="glass-card admin-panel" id="adminPanel">
+            <h2 class="section-title"><i class="fas fa-user-shield"></i> لوحة تحكم المسؤول</h2>
             
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-user"></i></div>
-                    <div class="info-label">الاسم</div>
-                    <div class="info-value">Ali</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <!-- نموذج إضافة لعبة -->
+                <div>
+                    <h3 style="color: var(--gold); margin-bottom: 15px;"><i class="fas fa-plus-circle"></i> إضافة لعبة جديدة</h3>
+                    <div class="admin-form">
+                        <input type="text" class="input-field" id="newGameName" placeholder="اسم اللعبة">
+                        <input type="text" class="input-field" id="newGameImage" placeholder="رابط صورة اللعبة (URL)">
+                        <input type="text" class="input-field" id="newGameDesc" placeholder="وصف مختصر">
+                        <button class="btn btn-primary" onclick="addNewGame()">
+                            <i class="fas fa-save"></i> حفظ اللعبة
+                        </button>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-mask"></i></div>
-                    <div class="info-label">اللقب</div>
-                    <div class="info-value">2B</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-location-dot"></i></div>
-                    <div class="info-label">السكن</div>
-                    <div class="info-value">Baghdad</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-cake-candles"></i></div>
-                    <div class="info-label">مواليد</div>
-                    <div class="info-value">2004</div>
-                </div>
-                <div class="info-item" style="grid-column: 1 / -1;">
-                    <div class="info-icon"><i class="fas fa-bolt"></i></div>
-                    <div class="info-label">هوايتي</div>
-                    <div class="info-value" style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px;">GAMING .THE. PC</div>
+
+                <!-- نموذج إنشاء جلسة تصويت -->
+                <div>
+                    <h3 style="color: var(--gold); margin-bottom: 15px;"><i class="fas fa-hourglass-start"></i> إنشاء جلسة تصويت</h3>
+                    <div class="admin-form">
+                        <input type="text" class="input-field" id="sessionTitle" placeholder="عنوان الجلسة (مثال: تصويت الأسبوع)">
+                        <input type="text" class="input-field" id="sessionDesc" placeholder="وصف الجلسة">
+                        <input type="number" class="input-field" id="sessionDays" placeholder="المدة بالأيام" value="7" min="1">
+                        <button class="btn btn-primary" onclick="createNewSession()">
+                            <i class="fas fa-play"></i> بدء الجلسة
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <h3 style="text-align: center; margin-top: 40px; margin-bottom: 20px; color: var(--gold); font-size: 1.5rem;">
-                <i class="fas fa-trophy"></i> ألعاب PC المفضلة
-            </h3>
-            <div class="games-showcase">
-                <div class="game-chip"><i class="fas fa-crosshairs"></i> Valorant</div>
-                <div class="game-chip"><i class="fas fa-dragon"></i> Elden Ring</div>
-                <div class="game-chip"><i class="fas fa-car"></i> GTA V</div>
-                <div class="game-chip"><i class="fas fa-robot"></i> Cyberpunk 2077</div>
-                <div class="game-chip"><i class="fas fa-skull"></i> Call of Duty</div>
-                <div class="game-chip"><i class="fas fa-hat-wizard"></i> Hogwarts Legacy</div>
-                <div class="game-chip"><i class="fas fa-futbol"></i> EA SPORTS FC 24</div>
-                <div class="game-chip"><i class="fas fa-shield-halved"></i> God of War</div>
+            <!-- إحصائيات سريعة -->
+            <h3 style="color: var(--gold); margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> إحصائيات عامة</h3>
+            <div class="stats-grid" id="adminStats">
+                <div class="stat-box">
+                    <div class="stat-value" id="statTotalVotes">0</div>
+                    <div class="stat-label">إجمالي الأصوات</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="statUniqueVoters">0</div>
+                    <div class="stat-label">مصوتون فريدون</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="statActiveGames">0</div>
+                    <div class="stat-label">ألعاب نشطة</div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Schedule Section -->
-    <section class="section" id="schedule">
+        <!-- Voting Section -->
         <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-calendar-days"></i> أوقات اللعب</h2>
-            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 20px; color: rgba(255,255,255,0.9);">
-                مواعيد البث المباشر يومياً - الساعة <strong style="color: var(--primary);">8:00 مساءً</strong>
-            </p>
-            <div class="schedule-grid" id="scheduleGrid">
-                <div class="schedule-card" data-day="0"><div class="day-icon"><i class="fas fa-sun"></i></div><div class="day-name">الأحد</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="1"><div class="day-icon"><i class="fas fa-moon"></i></div><div class="day-name">الإثنين</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="2"><div class="day-icon"><i class="fas fa-star"></i></div><div class="day-name">الثلاثاء</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="3"><div class="day-icon"><i class="fas fa-fire"></i></div><div class="day-name">الأربعاء</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="4"><div class="day-icon"><i class="fas fa-bolt"></i></div><div class="day-name">الخميس</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="5"><div class="day-icon"><i class="fas fa-gamepad"></i></div><div class="day-name">الجمعة</div><div class="day-time">8:00 PM</div></div>
-                <div class="schedule-card" data-day="6"><div class="day-icon"><i class="fas fa-crown"></i></div><div class="day-name">السبت</div><div class="day-time">8:00 PM</div></div>
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i>
+                نظام التصويت المتقدم
+            </h2>
+            
+            <div class="countdown" id="countdown">
+                جاري تحميل الجلسة...
+            </div>
+
+            <div class="poll-container" id="pollContainer">
+                <!-- الألعاب ستُحمّل هنا -->
             </div>
         </div>
-    </section>
 
-    <!-- PC Specs Section -->
-    <section class="section" id="pc-specs">
+        <!-- Top Visitors Section -->
         <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-desktop"></i> مواصفات الجهاز</h2>
-            <div class="pc-specs-header">
-                <div class="section-title" style="font-size: 1.5rem; margin: 0;">جهازي الفخم</div>
-                <div class="theme-selector">
-                    <div class="theme-btn active" data-theme="0" style="background: linear-gradient(135deg, #00d4ff, #7b2cbf);"></div>
-                    <div class="theme-btn" data-theme="1" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);"></div>
-                    <div class="theme-btn" data-theme="2" style="background: linear-gradient(135deg, #8e7cc3, #a67fc9);"></div>
-                    <div class="theme-btn" data-theme="3" style="background: linear-gradient(135deg, #48dbfb, #1dd1a1);"></div>
-                    <div class="theme-btn" data-theme="4" style="background: linear-gradient(135deg, #ff9f43, #ff6b6b);"></div>
-                    <div class="theme-btn" data-theme="5" style="background: linear-gradient(135deg, #576574, #808e9b);"></div>
-                    <div class="theme-btn" data-theme="6" style="background: linear-gradient(135deg, #48dbfb, #0abde3);"></div>
-                </div>
+            <h2 class="section-title">
+                <i class="fas fa-crown"></i>
+                أكثر الزوار نشاطاً
+            </h2>
+            <div class="top-visitors" id="topVisitors">
+                <!-- سيتم ملؤها بالJavaScript -->
             </div>
-            <div class="pc-specs">
-                <div class="spec-card">
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-microchip"></i></div>
-                        <div><div class="spec-name">المعالج</div><div class="spec-value">AMD Ryzen 9 7950X3D</div></div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-memory"></i></div>
-                        <div><div class="spec-name">الذاكرة العشوائية</div><div class="spec-value">64GB DDR5 6000MHz</div></div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-hard-drive"></i></div>
-                        <div><div class="spec-name">التخزين</div><div class="spec-value">2TB NVMe SSD + 8TB HDD</div></div>
-                    </div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-vr-cardboard"></i></div>
-                        <div><div class="spec-name">بطاقة الشاشة</div><div class="spec-value">NVIDIA GeForce RTX 4090</div></div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-computer-mouse"></i></div>
-                        <div><div class="spec-name">فأرة</div><div class="spec-value">Logitech G Pro X Superlight</div></div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-keyboard"></i></div>
-                        <div><div class="spec-name">لوحة المفاتيح</div><div class="spec-value">Razer Huntsman V2</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Poll Section -->
-    <section class="section" id="polls">
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-chart-pie"></i> استطلاعات الرأي</h2>
-            <div class="poll-container">
-                <h3 style="text-align: center; margin-bottom: 25px; font-size: 1.5rem; color: var(--gold);">ما هي اللعبة التي تريد رؤيتها في البث القادم؟</h3>
-                <div class="poll-options" id="pollOptions">
-                    <div class="poll-option" data-votes="45" onclick="voteForOption(this, 'God of War: Ragnarök')">
-                        <div class="poll-option-info">
-                            <div class="poll-option-name">God of War: Ragnarök</div>
-                            <div class="poll-votes-count">45 صوت</div>
-                        </div>
-                        <div class="poll-option-progress"><div class="poll-option-bar" style="width: 45%"></div></div>
-                    </div>
-                    <div class="poll-option" data-votes="30" onclick="voteForOption(this, 'The Last of Us Part II')">
-                        <div class="poll-option-info">
-                            <div class="poll-option-name">The Last of Us Part II</div>
-                            <div class="poll-votes-count">30 صوت</div>
-                        </div>
-                        <div class="poll-option-progress"><div class="poll-option-bar" style="width: 30%"></div></div>
-                    </div>
-                    <div class="poll-option" data-votes="15" onclick="voteForOption(this, 'Cyberpunk 2077')">
-                        <div class="poll-option-info">
-                            <div class="poll-option-name">Cyberpunk 2077</div>
-                            <div class="poll-votes-count">15 صوت</div>
-                        </div>
-                        <div class="poll-option-progress"><div class="poll-option-bar" style="width: 15%"></div></div>
-                    </div>
-                    <div class="poll-option" data-votes="10" onclick="voteForOption(this, 'Hogwarts Legacy')">
-                        <div class="poll-option-info">
-                            <div class="poll-option-name">Hogwarts Legacy</div>
-                            <div class="poll-votes-count">10 أصوات</div>
-                        </div>
-                        <div class="poll-option-progress"><div class="poll-option-bar" style="width: 10%"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Today's Game Section -->
-    <section class="section" id="today-game">
-        <div class="today-game">
-            <h2 class="section-title"><i class="fas fa-gamepad"></i> لعبة اليوم</h2>
-            <div class="game-name">GTA V</div>
-            <img src="S1.jpg" alt="GTA V" class="game-image">
-            <!-- Removed "جاري اللعب الآن" as requested -->
-        </div>
-    </section>
-
-    <!-- Alerts Section (New) -->
-    <section class="section" id="alerts">
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-bell"></i> تنبيهات وملاحظات</h2>
-            <div class="alerts-list">
-                <div class="alert-item">
-                    <div class="alert-icon"><i class="fas fa-triangle-exclamation"></i></div>
-                    <div class="alert-content">
-                        <h4>تحديث نظام البث</h4>
-                        <p>سيتم تحديث إعدادات البث يوم الخميس القادم لتحسين جودة الصورة إلى 4K. نرجو من المتابعين الالتزام بمواعيد البث الجديدة.</p>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <div class="alert-icon"><i class="fas fa-lightbulb"></i></div>
-                    <div class="alert-content">
-                        <h4>نصيحة للأسبوع</h4>
-                        <p>لتحسين أداء الألعاب، تأكد دائماً من تحديث تعريفات كارت الشاشة (GPU Drivers) إلى أحدث إصدار قبل بدء جلسة اللعب.</p>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <div class="alert-icon"><i class="fas fa-gift"></i></div>
-                    <div class="alert-content">
-                        <h4>مسابقة قادمة</h4>
-                        <p>استعدوا لمسابقة أسبوعية في سيرفر الديسكورد مع جوائز قيمة (Steam Gift Cards). التفاصيل ستعلن قريباً!</p>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <div class="alert-icon"><i class="fas fa-circle-info"></i></div>
-                    <div class="alert-content">
-                        <h4>ملاحظة هامة</h4>
-                        <p>يرجى احترام جميع الأعضاء في الدردشة أثناء البث المباشر. أي سلوك غير لائق سيؤدي إلى الحظر الفوري.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Section -->
-    <section class="section" id="social">
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-share-nodes"></i> تابعني على</h2>
-            <div class="social-links">
-                <a href="https://discord.gg/2b1" target="_blank" class="social-btn discord" title="Discord"><i class="fab fa-discord"></i></a>
-                <a href="https://www.tiktok.com/@qs.g0" target="_blank" class="social-btn tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://www.instagram.com/2b__a2?igsh=YXUza3pwbGd1c2lz" target="_blank" class="social-btn instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://youtube.com/@2beve?si=-VEP2fGXVvmZ7Ojp" target="_blank" class="social-btn youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Music Player -->
-    <div class="music-player">
-        <audio id="audioPlayer" src="S.mp3" preload="metadata"></audio>
-        <div class="music-controls">
-            <div class="music-title">S.mp3</div>
-            <div class="music-progress"><div class="music-progress-bar" id="musicProgress"></div></div>
-            <div class="music-buttons">
-                <button class="music-btn" id="musicPrev"><i class="fas fa-backward-step"></i></button>
-                <button class="music-btn" id="musicPlay"><i class="fas fa-play"></i></button>
-                <button class="music-btn" id="musicNext"><i class="fas fa-forward-step"></i></button>
-            </div>
-        </div>
-        <div class="music-volume">
-            <i class="fas fa-volume-high volume-icon"></i>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
         </div>
     </div>
 
-    <footer class="footer">
-        <p style="font-family: 'Audiowide', sans-serif; letter-spacing: 1.5px;">Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Gaming</p>
-    </footer>
+    <!-- Vote Modal -->
+    <div class="modal" id="voteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">
+                <i class="fas fa-vote-yea"></i>
+                تأكيد التصويت
+            </h3>
+            <p style="margin-bottom: 20px; color: rgba(255,255,255,0.8);">
+                اللعبة: <strong id="selectedGameName" style="color: var(--gold);"></strong>
+            </p>
+            <input type="text" class="input-field" id="voterName" placeholder="أدخل اسمك للتصويت" maxlength="50">
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" onclick="submitVote()">
+                    <i class="fas fa-check"></i>
+                    تأكيد التصويت
+                </button>
+                <button class="btn btn-secondary" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.6);">
+                <i class="fas fa-fingerprint"></i>
+                سيتم حفظ بصمة جهازك لمنع التصويت المكرر
+            </p>
+        </div>
+    </div>
+
+    <!-- Voters List Modal -->
+    <div class="modal" id="votersModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3 class="modal-title">
+                <i class="fas fa-users"></i>
+                المصوتون
+            </h3>
+            <div id="votersListContent" style="max-height: 400px; overflow-y: auto;">
+                <!-- سيتم ملؤها -->
+            </div>
+            <button class="btn btn-secondary" onclick="closeVotersModal()" style="margin-top: 20px;">
+                <i class="fas fa-times"></i>
+                إغلاق
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ========================================== -->
+    <!-- === إضافة جديدة: زر لوحة التحكم === -->
+    <!-- ========================================== -->
+    <button class="admin-toggle-btn" onclick="toggleAdminPanel()" title="لوحة التحكم">
+        <i class="fas fa-cog"></i>
+    </button>
 
     <script>
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1530489988117168159/ZSwoWpS6ovcnLYpU8lbDUptNVfb59G3YNa1o2fPBQlnQzmsWszBjWGKTjsnngeqJcH35';
+        // Supabase Configuration
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // استبدل هذا برابط مشروعك
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // استبدل هذا بالمفتاح الخاص بك
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        window.addEventListener('load', () => {
-            setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1500);
-        });
+        let deviceFingerprint = null;
+        let selectedGameId = null;
+        let currentSession = null;
+        let isAdmin = false;
 
-        // Tabs
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.section).classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
+        // Initialize
+        async function init() {
+            await getDeviceFingerprint();
+            await loadActiveSession();
+            await loadGames();
+            await loadTopVisitors();
+            await trackVisit();
+            updateClock();
+            setInterval(updateClock, 1000);
+            setInterval(checkSessionTime, 60000);
+            
+            // Load admin stats if panel is opened
+            loadAdminStats();
+        }
 
-        // Clock & Date (12-hour format + Full Arabic Date)
+        // Device Fingerprinting
+        async function getDeviceFingerprint() {
+            try {
+                const fp = await FingerprintJS.load();
+                const result = await fp.get();
+                deviceFingerprint = result.visitorId;
+                return deviceFingerprint;
+            } catch (error) {
+                console.error('Fingerprint error:', error);
+                showToast('حدث خطأ في التعرف على الجهاز', 'error');
+                return null;
+            }
+        }
+
+        // ==========================================
+        // === إضافة جديدة: دوال لوحة التحكم ===
+        // ==========================================
+        function toggleAdminPanel() {
+            if (!isAdmin) {
+                const password = prompt('أدخل كلمة مرور المسؤول:');
+                if (password === '2B2024') { // يمكنك تغيير كلمة المرور هنا
+                    isAdmin = true;
+                    showToast('تم تسجيل الدخول كمسؤول', 'success');
+                } else {
+                    showToast('كلمة المرور خاطئة', 'error');
+                    return;
+                }
+            }
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('show');
+            if (panel.classList.contains('show')) {
+                loadAdminStats();
+            }
+        }
+
+        async function addNewGame() {
+            const name = document.getElementById('newGameName').value.trim();
+            const image = document.getElementById('newGameImage').value.trim();
+            const desc = document.getElementById('newGameDesc').value.trim();
+
+            if (!name) {
+                showToast('الرجاء إدخال اسم اللعبة', 'error');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.rpc('add_game', {
+                    p_name: name,
+                    p_image_url: image || null,
+                    p_description: desc || null
+                });
+
+                if (error) throw error;
+
+                showToast('تم إضافة اللعبة بنجاح!', 'success');
+                document.getElementById('newGameName').value = '';
+                document.getElementById('newGameImage').value = '';
+                document.getElementById('newGameDesc').value = '';
+                
+                await loadGames();
+                await loadAdminStats();
+            } catch (error) {
+                console.error('Add game error:', error);
+                showToast('حدث خطأ أثناء إضافة اللعبة', 'error');
+            }
+        }
+
+        async function createNewSession() {
+            const title = document.getElementById('sessionTitle').value.trim();
+            const desc = document.getElementById('sessionDesc').value.trim();
+            const days = parseInt(document.getElementById('sessionDays').value) || 7;
+
+            if (!title) {
+                showToast('الرجاء إدخال عنوان الجلسة', 'error');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.rpc('create_voting_session', {
+                    p_title: title,
+                    p_description: desc || null,
+                    p_duration_days: days,
+                    p_creator: 'Admin'
+                });
+
+                if (error) throw error;
+
+                showToast('تم إنشاء جلسة التصويت بنجاح!', 'success');
+                document.getElementById('sessionTitle').value = '';
+                document.getElementById('sessionDesc').value = '';
+                
+                await loadActiveSession();
+                await loadGames();
+            } catch (error) {
+                console.error('Create session error:', error);
+                showToast('حدث خطأ أثناء إنشاء الجلسة', 'error');
+            }
+        }
+
+        async function loadAdminStats() {
+            try {
+                // Get total votes and unique voters
+                const { data: votesData } = await supabase.from('votes').select('game_id, device_fingerprint');
+                const totalVotes = votesData ? votesData.length : 0;
+                const uniqueVoters = votesData ? new Set(votesData.map(v => v.device_fingerprint)).size : 0;
+
+                // Get active games
+                const { data: gamesData } = await supabase.from('games').select('id').eq('is_active', true);
+                const activeGames = gamesData ? gamesData.length : 0;
+
+                document.getElementById('statTotalVotes').textContent = totalVotes;
+                document.getElementById('statUniqueVoters').textContent = uniqueVoters;
+                document.getElementById('statActiveGames').textContent = activeGames;
+            } catch (error) {
+                console.error('Stats error:', error);
+            }
+        }
+
+        // Load Active Voting Session
+        async function loadActiveSession() {
+            try {
+                const { data, error } = await supabase
+                    .from('voting_sessions')
+                    .select('*')
+                    .eq('is_active', true)
+                    .gte('end_time', new Date().toISOString())
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                if (error) {
+                    document.getElementById('countdown').innerHTML = 'لا توجد جلسة نشطة حالياً';
+                    return;
+                }
+                
+                if (data) {
+                    currentSession = data;
+                    document.getElementById('countdown').innerHTML = 'جاري حساب الوقت المتبقي...';
+                    updateCountdown(data.end_time);
+                }
+            } catch (error) {
+                console.error('Error loading session:', error);
+            }
+        }
+
+        // Update Countdown
+        function updateCountdown(endTime) {
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const end = new Date(endTime).getTime();
+                const distance = end - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    document.getElementById('countdown').innerHTML = '<i class="fas fa-hourglass-end"></i> انتهى التصويت';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML = 
+                    `<i class="fas fa-clock"></i> الوقت المتبقي: ${days}ي ${hours}س ${minutes}د ${seconds}ث`;
+            }, 1000);
+        }
+
+        // Load Games (محدث لاستخدام الإحصائيات المفصلة)
+        async function loadGames() {
+            try {
+                // Try to use the detailed stats function if session exists
+                let gamesData = [];
+                
+                if (currentSession) {
+                    const { data: stats, error: statsError } = await supabase.rpc('get_detailed_stats', { p_session_id: currentSession.id });
+                    if (!statsError && stats) {
+                        gamesData = stats;
+                    }
+                }
+
+                // Fallback to basic query if RPC fails or no session
+                if (gamesData.length === 0) {
+                    const { data: games, error } = await supabase
+                        .from('games')
+                        .select('*')
+                        .eq('is_active', true)
+                        .order('created_at', { ascending: false });
+                    
+                    if (error) throw error;
+                    
+                    // Calculate basic stats
+                    const gameIds = games.map(g => g.id);
+                    const { data: votes } = await supabase.from('votes').select('game_id').in('game_id', gameIds);
+                    
+                    gamesData = games.map(game => {
+                        const voteCount = votes ? votes.filter(v => v.game_id === game.id).length : 0;
+                        return {
+                            game_id: game.id,
+                            game_name: game.name,
+                            total_votes: voteCount,
+                            percentage: 0, // Will calculate below
+                            unique_voters: voteCount,
+                            description: game.description,
+                            image_url: game.image_url
+                        };
+                    });
+                }
+
+                const container = document.getElementById('pollContainer');
+                container.innerHTML = '';
+
+                const totalVotes = gamesData.reduce((sum, game) => sum + (game.total_votes || 0), 0);
+                const maxVotes = Math.max(...gamesData.map(g => g.total_votes || 0));
+
+                gamesData.forEach(game => {
+                    const percentage = totalVotes > 0 ? (((game.total_votes || 0) / totalVotes) * 100).toFixed(1) : 0;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    if ((game.total_votes || 0) === maxVotes && maxVotes > 0) {
+                        card.classList.add('most-voted');
+                    }
+                    
+                    card.innerHTML = `
+                        <img src="${game.image_url || 'https://via.placeholder.com/400x200/1a1a2e/00d4ff?text=Game'}" 
+                             alt="${game.game_name}" class="game-image" onerror="this.src='https://via.placeholder.com/400x200/1a1a2e/00d4ff?text=Game'">
+                        <div class="game-name">${game.game_name}</div>
+                        <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px; font-size: 0.9rem;">${game.description || 'لا يوجد وصف'}</p>
+                        <div class="vote-bar">
+                            <div class="vote-progress" style="width: ${percentage}%">
+                                ${percentage}%
+                            </div>
+                        </div>
+                        <div class="vote-count">
+                            <i class="fas fa-vote-yea"></i>
+                            ${game.total_votes || 0} صوت 
+                            <span style="font-size: 0.8rem; color: var(--primary);">(${game.unique_voters || 0} مصوت فريد)</span>
+                        </div>
+                        <button class="btn btn-secondary" style="width: 100%; margin-top: 15px; padding: 12px; font-size: 0.9rem;"
+                                onclick="event.stopPropagation(); showVotersList('${game.game_id}')">
+                            <i class="fas fa-users"></i>
+                            عرض المصوتين
+                        </button>
+                    `;
+
+                    card.onclick = (e) => {
+                        if (!e.target.closest('button')) {
+                            openVoteModal(game.game_id, game.game_name);
+                        }
+                    };
+
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading games:', error);
+                showToast('حدث خطأ في تحميل الألعاب', 'error');
+            }
+        }
+
+        // Open Vote Modal
+        function openVoteModal(gameId, gameName) {
+            if (!currentSession) {
+                showToast('لا توجد جلسة تصويت نشطة حالياً', 'error');
+                return;
+            }
+
+            selectedGameId = gameId;
+            document.getElementById('selectedGameName').textContent = gameName;
+            document.getElementById('voteModal').classList.add('show');
+            document.getElementById('voterName').focus();
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('voteModal').classList.remove('show');
+            document.getElementById('voterName').value = '';
+            selectedGameId = null;
+        }
+
+        // Submit Vote
+        async function submitVote() {
+            const voterName = document.getElementById('voterName').value.trim();
+            
+            if (!voterName) {
+                showToast('الرجاء إدخال اسمك', 'error');
+                return;
+            }
+
+            if (!deviceFingerprint) {
+                showToast('تعذر التعرف على الجهاز', 'error');
+                return;
+            }
+
+            try {
+                // Insert vote (Database UNIQUE constraint will prevent duplicates)
+                const { error } = await supabase
+                    .from('votes')
+                    .insert({
+                        game_id: selectedGameId,
+                        voter_name: voterName,
+                        device_fingerprint: deviceFingerprint,
+                        browser_info: navigator.userAgent
+                    });
+
+                if (error) {
+                    if (error.code === '23505') { // Unique violation
+                        showToast('لقد قمت بالتصويت بالفعل على هذه اللعبة!', 'error');
+                    } else {
+                        throw error;
+                    }
+                    closeModal();
+                    return;
+                }
+
+                // Update active users
+                await supabase
+                    .from('active_users')
+                    .upsert({
+                        device_fingerprint: deviceFingerprint,
+                        voter_name: voterName,
+                        total_votes: supabase.raw('total_votes + 1'),
+                        last_activity: new Date().toISOString()
+                    }, {
+                        onConflict: 'device_fingerprint'
+                    });
+
+                showToast('تم تصويتك بنجاح! ✓', 'success');
+                closeModal();
+                await loadGames(); // Refresh UI
+                await loadAdminStats(); // Refresh admin stats
+                
+            } catch (error) {
+                console.error('Vote error:', error);
+                showToast('حدث خطأ في التصويت', 'error');
+            }
+        }
+
+        // Show Voters List
+        async function showVotersList(gameId) {
+            try {
+                const { data: voters, error } = await supabase
+                    .from('votes')
+                    .select('voter_name, voted_at')
+                    .eq('game_id', gameId)
+                    .order('voted_at', { ascending: false });
+
+                if (error) throw error;
+
+                const content = document.getElementById('votersListContent');
+                
+                if (!voters || voters.length === 0) {
+                    content.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6); padding: 20px;">لا يوجد مصوتون على هذه اللعبة بعد</p>';
+                } else {
+                    content.innerHTML = voters.map((v, i) => `
+                        <div class="voter-item">
+                            <span class="voter-name"><i class="fas fa-user-circle"></i> ${v.voter_name}</span>
+                            <span class="voter-time">${new Date(v.voted_at).toLocaleString('ar-IQ')}</span>
+                        </div>
+                    `).join('');
+                }
+
+                document.getElementById('votersModal').classList.add('show');
+
+            } catch (error) {
+                console.error('Error loading voters:', error);
+                showToast('حدث خطأ في تحميل قائمة المصوتين', 'error');
+            }
+        }
+
+        function closeVotersModal() {
+            document.getElementById('votersModal').classList.remove('show');
+        }
+
+        // Load Top Visitors (محدث لاستخدام View)
+        async function loadTopVisitors() {
+            try {
+                const { data: visitors, error } = await supabase
+                    .from('top_voters')
+                    .select('*')
+                    .limit(10);
+
+                if (error) throw error;
+
+                const container = document.getElementById('topVisitors');
+                container.innerHTML = '';
+
+                if (!visitors || visitors.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6); width: 100%;">لا توجد بيانات نشاط بعد</p>';
+                    return;
+                }
+
+                visitors.forEach((visitor, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'visitor-card';
+                    card.innerHTML = `
+                        <div class="visitor-rank">${index + 1}</div>
+                        <div class="visitor-info">
+                            <div class="visitor-name">${visitor.voter_name || 'زائر مجهول'}</div>
+                            <div class="visitor-stats">
+                                <i class="fas fa-vote-yea"></i> ${visitor.total_votes} تصويت | 
+                                <i class="fas fa-gamepad"></i> ${visitor.games_voted} ألعاب
+                            </div>
+                        </div>
+                        <div style="color: var(--gold); font-weight: 700; font-family: 'Orbitron', monospace;">
+                            #${visitor.voter_rank}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading visitors:', error);
+            }
+        }
+
+        // Track Visit
+        async function trackVisit() {
+            if (!deviceFingerprint) return;
+
+            try {
+                const { data: existingVisitor } = await supabase
+                    .from('visitors')
+                    .select('id')
+                    .eq('device_fingerprint', deviceFingerprint)
+                    .single();
+
+                if (existingVisitor) {
+                    await supabase
+                        .from('visitors')
+                        .update({
+                            last_visit: new Date().toISOString(),
+                            visit_count: supabase.raw('visit_count + 1')
+                        })
+                        .eq('device_fingerprint', deviceFingerprint);
+
+                    await supabase
+                        .from('active_users')
+                        .upsert({
+                            device_fingerprint: deviceFingerprint,
+                            total_visits: supabase.raw('total_visits + 1'),
+                            last_activity: new Date().toISOString()
+                        }, {
+                            onConflict: 'device_fingerprint'
+                        });
+                } else {
+                    await supabase
+                        .from('visitors')
+                        .insert({
+                            device_fingerprint: deviceFingerprint,
+                            browser_info: navigator.userAgent,
+                            visit_count: 1
+                        });
+                }
+
+                await supabase
+                    .from('page_visits')
+                    .insert({
+                        device_fingerprint: deviceFingerprint,
+                        page_url: window.location.href
+                    });
+
+            } catch (error) {
+                console.error('Track visit error:', error);
+            }
+        }
+
+        // Check Session Time
+        async function checkSessionTime() {
+            if (!currentSession) return;
+
+            const now = new Date();
+            const endTime = new Date(currentSession.end_time);
+
+            if (now > endTime) {
+                showToast('انتهت جلسة التصويت الحالية', 'error');
+                await loadActiveSession();
+                await loadGames();
+            }
+        }
+
+        // Update Clock
         function updateClock() {
             const now = new Date();
-            
-            // 12-hour time format
-            const timeString = now.toLocaleTimeString('en-US', { 
+            const timeString = now.toLocaleTimeString('ar-IQ', { 
                 hour: '2-digit', 
                 minute: '2-digit', 
-                second: '2-digit', 
+                second: '2-digit',
                 hour12: true 
             });
-            document.getElementById('clock').textContent = timeString;
-
-            // Full distinctive Arabic date
-            const dateOptions = { 
+            const dateString = now.toLocaleDateString('ar-IQ', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
-            };
-            const dateString = now.toLocaleDateString('ar-IQ', dateOptions);
-            document.getElementById('fullDate').textContent = dateString;
-            
-            // Schedule highlight
-            const cards = document.querySelectorAll('.schedule-card');
-            cards.forEach(card => {
-                const day = parseInt(card.dataset.day);
-                if (day === now.getDay() && now.getHours() >= 20) {
-                    card.classList.add('active');
-                } else {
-                    card.classList.remove('active');
-                }
             });
+
+            document.getElementById('clock').textContent = timeString;
+            document.getElementById('dateDisplay').textContent = dateString;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // Album Slider
-        const slides = document.querySelectorAll('.album-slide');
-        const dotsContainer = document.getElementById('albumDots');
-        const albumTexts = ['أهلاً بك في عالم 2B', 'PC & PS2 Gaming', 'بث مباشر يومياً', 'أفضل الألعاب', 'انضم إلينا في Discord', 'تابعنا على المنصات', 'لحظات لا تُنسى', 'Gaming Community', '2B Gaming World'];
-        let currentSlide = 0;
-
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = 'dot' + (index === 0 ? ' active' : '');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-
-        function goToSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
-            currentSlide = index;
-            slides[currentSlide].classList.add('active');
-            document.querySelectorAll('.dot')[currentSlide].classList.add('active');
-            document.getElementById('albumText').textContent = albumTexts[currentSlide];
-        }
-        setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4000);
-
-        // Theme Selector
-        document.querySelectorAll('.theme-btn').forEach((button, index) => {
-            button.addEventListener('click', () => {
-                document.body.className = '';
-                if (index > 0) document.body.classList.add(`theme-${index}`);
-                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-            });
-        });
 
         // Toast Notification
-        function showToast(message) {
-            const toastContainer = document.getElementById('toastContainer');
-            toastContainer.querySelector('.toast div:last-child').textContent = message;
-            toastContainer.classList.add('show');
-            setTimeout(() => toastContainer.classList.remove('show'), 3000);
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        // Poll Voting
-        let hasVoted = false;
-        let totalVotes = 100;
-
-        function voteForOption(element, gameName) {
-            if (hasVoted) {
-                showToast('لقد صوتت بالفعل!');
-                return;
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
             }
-            document.querySelectorAll('.poll-option').forEach(opt => opt.classList.remove('voted'));
-            element.classList.add('voted');
-            hasVoted = true;
-
-            const currentVotes = parseInt(element.getAttribute('data-votes'));
-            element.setAttribute('data-votes', currentVotes + 1);
-            totalVotes++;
-
-            document.querySelectorAll('.poll-option').forEach(option => {
-                const votes = parseInt(option.getAttribute('data-votes'));
-                const percentage = ((votes / totalVotes) * 100).toFixed(1);
-                option.querySelector('.poll-option-bar').style.width = percentage + '%';
-                option.querySelector('.poll-votes-count').textContent = votes + ' صوت';
-                
-                if (option === element) {
-                    option.style.border = '2px solid #00ff00';
-                    option.style.background = 'rgba(0, 255, 0, 0.15)';
-                } else {
-                    option.style.border = '2px solid transparent';
-                    option.style.background = 'rgba(0, 0, 0, 0.2)';
-                }
-            });
-
-            showToast(`تم تصويتك لـ ${gameName} بنجاح!`);
-            localStorage.setItem('hasVotedPoll', 'true');
-            localStorage.setItem('votedOption', gameName);
-
-            // Send to Discord
-            fetch(DISCORD_WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: `🎮 **تصويت جديد!**\nاللعبة: **${gameName}**\nعدد الأصوات: **${currentVotes + 1}**` })
-            }).catch(err => console.error('Discord Error:', err));
         }
 
-        window.addEventListener('load', () => {
-            if (localStorage.getItem('hasVotedPoll') === 'true') {
-                hasVoted = true;
-                const voted = localStorage.getItem('votedOption');
-                document.querySelectorAll('.poll-option').forEach(opt => {
-                    if (opt.querySelector('.poll-option-name').textContent === voted) opt.classList.add('voted');
-                });
-            }
-            // Trigger initial poll update
-            document.querySelectorAll('.poll-option').forEach(opt => {
-                const votes = parseInt(opt.getAttribute('data-votes'));
-                opt.querySelector('.poll-option-bar').style.width = ((votes / totalVotes) * 100).toFixed(1) + '%';
-            });
-        });
-
-        // Music Player
-        const audioPlayer = document.getElementById('audioPlayer');
-        const musicPlayBtn = document.getElementById('musicPlay');
-        let isPlaying = false;
-
-        musicPlayBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audioPlayer.pause();
-                musicPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-                isPlaying = false;
-            } else {
-                audioPlayer.play().then(() => {
-                    musicPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    isPlaying = true;
-                }).catch(() => showToast('تأكد من وجود ملف S.mp3'));
-            }
-        });
-
-        audioPlayer.addEventListener('timeupdate', () => {
-            if (audioPlayer.duration) {
-                document.getElementById('musicProgress').style.width = ((audioPlayer.currentTime / audioPlayer.duration) * 100) + '%';
-            }
-        });
-
-        document.getElementById('volumeSlider').addEventListener('input', (e) => {
-            audioPlayer.volume = e.target.value / 100;
-        });
-        audioPlayer.volume = 0.7;
-
-        // Prevent mobile zoom
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', (e) => {
-            if ((new Date()).getTime() - lastTouchEnd <= 300) e.preventDefault();
-            lastTouchEnd = (new Date()).getTime();
-        }, false);
-        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
